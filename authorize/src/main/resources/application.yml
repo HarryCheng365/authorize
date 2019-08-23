@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: online
+    active: dev
 
 
 
@@ -8,5 +8,5 @@ logging:
   config: classpath:logback.xml
 
 mybatis:
-  type-aliases-package: com.netease.toutiao.entity
-  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.authorize.weixin.entity
+  mapper-locations: classpath:/mapper/*.xml

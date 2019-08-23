@@ -1,7 +1,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.authorize.weixin.dao.WeChatUserAccessTokenDao">
+<mapper namespace="com.example.authorize.weixin.dao.WeChatUserAccountInfoDao">
     <resultMap id="userAccountInfoMsgRecordMap" type="com.example.authorize.weixin.entity.AuthorizeAccountInfoMsg">
         <result column="authorizerAppId" property="authorizerAppId"/>
         <result column="user_name" property="user_name"/>

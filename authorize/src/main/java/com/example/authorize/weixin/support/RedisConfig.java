@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import javax.annotation.PreDestroy;
+
 @Component
 public class RedisConfig {
     @Value("${spring.redis.pool.maxTotal}")
@@ -53,5 +55,11 @@ public class RedisConfig {
             }
         }
         return jedisPool;
+    }
+    @PreDestroy
+    public void preDestroy(){
+        if (jedisPool != null) {
+            jedisPool.destroy();
+        }
     }
 }
