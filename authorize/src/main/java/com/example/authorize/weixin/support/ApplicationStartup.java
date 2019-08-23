@@ -21,7 +21,6 @@ public class ApplicationStartup implements ApplicationListener<ContextStartedEve
         });
 
         TokenManager tokenManager = contextStartedEvent.getApplicationContext().getBean(TokenManager.class);
-        tokenManager.initAll();
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
