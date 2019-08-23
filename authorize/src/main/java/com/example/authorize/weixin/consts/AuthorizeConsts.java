@@ -12,4 +12,5 @@ public class AuthorizeConsts {
     public static String authorizeAccessToken ="AUTHORIZER_ACCESS_TOKEN";
     public static int ONE_SECOND=1000;
     public static String userAccessToken ="USER_ACCESS_TOKEN";
+    public static String delayKey="DELAY_KEY";
 }

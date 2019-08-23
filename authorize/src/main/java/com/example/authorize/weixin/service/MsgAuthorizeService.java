@@ -62,6 +62,7 @@ public class MsgAuthorizeService {
     public void saveComponentTicket(AuthorizeMsg authorizeMsg){
         try {
             weChatMsgAuthorizeDao.insertRecord(authorizeMsg);
+            logger.info(authorizeMsg.getAppId()+authorizeMsg.getComponentVerifyTicket());
         }catch (Exception e){
             logger.error("AuthorizeMsg 存入信息失败"+e.getMessage());
         }

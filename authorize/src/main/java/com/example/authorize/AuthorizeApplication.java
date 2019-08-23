@@ -1,5 +1,6 @@
 package com.example.authorize;
 
+import com.example.authorize.weixin.support.ApplicationStartup;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +10,10 @@ import org.springframework.context.annotation.Configuration;
 public class AuthorizeApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthorizeApplication.class, args);
+        SpringApplication springApplication = new SpringApplication(AuthorizeApplication.class);
+        springApplication.addListeners(new ApplicationStartup());
+        springApplication.run(args);
+
     }
 
 }

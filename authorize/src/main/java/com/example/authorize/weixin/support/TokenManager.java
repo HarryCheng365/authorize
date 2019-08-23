@@ -76,6 +76,29 @@ public class TokenManager {
 	public  void setDaemon(boolean daemon) {
 		this.daemon = daemon;
 	}
+	public void initAll(){
+		String component_verify_ticket=null;
+		try {
+			for(int i=0;i<10;i++) {
+				component_verify_ticket = weChatMsgAuthorizeDao.getLastestComponentVerifyTickets(AuthorizeConsts.appId);
+				if (component_verify_ticket == null) {
+					Thread.sleep(10000);
+				}else{
+					break;
+				}
+			}
+		}catch (Exception e){
+			logger.error("COMPONENT_VERIFY_TICKET is not exist in the database",e);
+		}
+
+		try {
+			initComponentAccessToken(AuthorizeConsts.appId, AuthorizeConsts.appSecret, component_verify_ticket);
+			String componentAccessToken = redisService.get(AuthorizeConsts.appId + AuthorizeConsts.componentAccessToken);
+			initPreAuthCode(AuthorizeConsts.appId, componentAccessToken);
+		}catch (Exception e){
+			logger.error("COMPONENT_ACCESS_TOKEN bad initialization",e);
+		}
+	}
 	public void initComponentAccessToken(String componentAppid, String componentSecret,String component_verify_ticket){
 		initComponentAccessToken(componentAppid,componentSecret,component_verify_ticket,10*60,118*60);
 
