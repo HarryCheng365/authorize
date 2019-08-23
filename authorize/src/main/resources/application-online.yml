@@ -26,3 +26,16 @@ spring:
     password:
       ytaotao
 
+  redis:
+    ip: 47.96.89.99
+    port: 6379
+    password: ytaotao
+    timeout: 3000
+    database: 0
+    pool:
+      maxTotal: 800
+      maxWaitMillis: 10000
+      testOnBorrow: true
+      testOnReturn: true
+      testWhileIdle: true
+

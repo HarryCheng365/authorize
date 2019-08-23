@@ -38,3 +38,5 @@ spring:
       testOnBorrow: true
       testOnReturn: true
       testWhileIdle: true
+      maxIdle: 100
+      minIdle: 30
