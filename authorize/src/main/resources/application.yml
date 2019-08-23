@@ -5,7 +5,7 @@ spring:
 
 
 logging:
-  config: classpath:config/logback.xml
+  config: classpath:./logback.xml
 
 mybatis:
   type-aliases-package: com.netease.toutiao.entity
