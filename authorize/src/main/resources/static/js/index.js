@@ -1,7 +1,7 @@
 (function(window, angular, $) {
 
-    var app = angular.module('myApp'['ui.router']);
-    app.controller("indexCtrl", function ($scope, $http) {
+    var myApp = angular.module('myApp', []);
+    myApp.controller("indexCtrl", function ($scope, $http) {
 
         $scope.baseUrl = "https://mp.weixin.qq.com/cgi-bin/componentloginpage?";
         $scope.mobileBaseUrl = "https://mp.weixin.qq.com/safe/bindcomponent?";
