@@ -59,7 +59,7 @@
 
     <insert id="insertRecord">
         insert into wechat_authorizer_msg (<include refid="authorizeMsgRecordColumn"/>)
-        values (<include refid="authorizeMsgRecordColumn"/>)
+        values (<include refid="authorizeMsgRecordValue"/>)
     </insert>
 
     <select id="selectAuthorizeMsg" parameterType="com.example.authorize.weixin.dao.MsgAuthorizeQueryDTO" resultMap="authorizeMsgRecordMap">
