@@ -8,9 +8,9 @@
         <version>2.1.7.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
+    <groupId>com.netease</groupId>
     <artifactId>authorize</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <name>authorize</name>
     <description>Demo project for Spring Boot</description>
 
