@@ -1,0 +1,47 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.authorize.weixin.dao.WeChatUserAccessTokenDao">
+    <resultMap id="userAccessTokenMsgRecordMap" type="com.example.authorize.weixin.entity.AuthorizeAccessTokenMsg">
+        <result column="authorizerAppId" property="authorizerAppId"/>
+        <result column="authorizerRefreshToken" property="authorizerRefreshToken"/>
+        <result column="createTime" property="createTime"/>
+        <result column="expiresIn" property="expiresIn"/>
+        <result column="authorizerAccessToken" property="authorizerAccessToken"/>
+    </resultMap>
+
+    <sql id="userAccessTokenMsgRecordColumn">
+        <trim suffix="" suffixOverrides=",">
+            <if test="authorizerAppId!= null">authorizerAppId,</if>
+            <if test="authorizerRefreshToken!= null">authorizerRefreshToken,</if>
+            <if test="createTime != null">createTime,</if>
+            <if test="expiresIn != null">expiresIn,</if>
+            <if test="authorizerAccessToken != null">authorizerAccessToken,</if>
+        </trim>
+    </sql>
+
+    <sql id="userAccessTokenMsgRecordValue">
+        <trim suffix="" suffixOverrides=",">
+            <if test="authorizerAppId!= null">#{authorizerAppId},</if>
+            <if test="authorizerRefreshToken != null">#{authorizerRefreshToken},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="expiresIn != null">#{expiresIn},</if>
+            <if test="authorizerAccessToken!= null">#{authorizerAccessToken},</if>
+        </trim>
+    </sql>
+
+    <update id="updateRecord">
+        update wechat_user_access_tokens set
+        <trim suffix="" suffixOverrides=",">
+            <if test="authorizerRefreshToken != null">#{authorizerRefreshToken},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="expiresIn != null">#{expiresIn},</if>
+            <if test="authorizerAccessToken!= null">#{authorizerAccessToken},</if>
+        </trim>
+        where authorizerAppId=#{authorizerAppId}
+    </update>
+    <insert id="insertRecord">
+        insert into wechat_user_access_tokens(<include refid="userAccessTokenMsgRecordColumn"/>)
+        values (<include refid="userAccessTokenMsgRecordValue"/>)
+    </insert>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.authorize.weixin.dao.WeChatComponentAccessTokenDao">
+    <resultMap id="comAccessTokenMsgRecordMap" type="com.example.authorize.weixin.entity.ComponentAccessTokenMsg">
+        <result column="id" property="id"/>
+        <result column="componentAppId" property="componentAppId"/>
+        <result column="createTime" property="createTime"/>
+        <result column="expiresIn" property="expiresIn"/>
+        <result column="componentAccessToken" property="componentAccessToken"/>
+    </resultMap>
+    <sql id="comAccessTokenMsgRecordColumn">
+        <trim suffix="" suffixOverrides=",">
+            <if test="componentAppId!= null">componentAppId,</if>
+            <if test="createTime != null">createTime,</if>
+            <if test="expiresIn != null">expiresIn,</if>
+            <if test="componentAccessToken != null">componentAccessToken,</if>
+        </trim>
+    </sql>
+    <sql id="comAccessTokenMsgRecordValue">
+        <trim suffix="" suffixOverrides=",">
+            <if test="componentAppId!= null">#{componentAppId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="expiresIn != null">#{expiresIn},</if>
+            <if test="componentAccessToken!= null">#{componentAccessToken},</if>
+        </trim>
+    </sql>
+
+    <update id="updateRecord">
+        update wechat_component_access_tokens set
+        <trim suffix="" suffixOverrides=",">
+            <if test="componentAppId!= null">#{componentAppId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="expiresIn != null">#{expiresIn},</if>
+            <if test="componentAccessToken!= null">#{componentAccessToken},</if>
+        </trim>
+        where id=#{id}
+    </update>
+    <insert id="insertRecord">
+        insert into wechat_component_access_tokens(<include refid="comAccessTokenMsgRecordColumn"/>)
+        values (<include refid="comAccessTokenMsgRecordValue"/>)
+    </insert>
+</mapper>

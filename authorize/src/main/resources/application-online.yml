@@ -20,21 +20,9 @@ spring:
     driver-class-name:
       com.mysql.jdbc.Driver
     url:
-      jdbc:mysql://localhost:3306/db_person?characterEncoding=utf-8
+      jdbc:mysql://47.96.89.99:3306/authorize?characterEncoding=utf-8
     username:
       root
     password:
-      Chy908798
+      ytaotao
 
-  redis:
-    ip: 47.96.89.99
-    port: 6379
-    password: ytaotao
-    timeout: 3000
-    database: 0
-    pool:
-      maxTotal: 800
-      maxWaitMillis: 10000
-      testOnBorrow: true
-      testOnReturn: true
-      testWhileIdle: true

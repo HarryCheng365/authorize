@@ -1,0 +1,67 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.authorize.weixin.dao.WeChatUserAccessTokenDao">
+    <resultMap id="userAccountInfoMsgRecordMap" type="com.example.authorize.weixin.entity.AuthorizeAccountInfoMsg">
+        <result column="authorizerAppId" property="authorizerAppId"/>
+        <result column="user_name" property="user_name"/>
+        <result column="nick_name" property="nick_name"/>
+        <result column="principal_name" property="principal_name"/>
+        <result column="service_type_info" property="service_type_info"/>
+        <result column="verify_type_info" property="verify_type_info"/>
+        <result column="alias" property="alias"/>
+        <result column="business_info" property="business_info"/>
+        <result column="qrcode_url" property="qrcode_url"/>
+        <result column="func_info" property="func_info"/>
+    </resultMap>
+
+    <sql id="userAccountInfoMsgRecordColumn">
+        <trim suffix="" suffixOverrides=",">
+            <if test="authorizerAppId!= null">authorizerAppId,</if>
+            <if test="user_name!= null">user_name,</if>
+            <if test="nick_name != null">nick_name,</if>
+            <if test="principal_name != null">principal_name,</if>
+            <if test="service_type_info != null">service_type_info,</if>
+            <if test="verify_type_info !=null">verify_type_info,</if>
+            <if test ="alias != null">alias,</if>
+            <if test ="business_info !=null">business_info,</if>
+            <if test ="qrcode_url!=null">qrcode_url,</if>
+            <if test ="func_info!=null">func_info,</if>
+        </trim>
+    </sql>
+
+    <sql id="userAccountInfoMsgRecordValue">
+        <trim suffix="" suffixOverrides=",">
+            <if test="authorizerAppId!= null">#{authorizerAppId},</if>
+            <if test="user_name!= null">#{user_name},</if>
+            <if test="nick_name != null">#{nick_name},</if>
+            <if test="principal_name != null">#{principal_name},</if>
+            <if test="service_type_info != null">#{service_type_info},</if>
+            <if test="verify_type_info !=null">#{verify_type_info},</if>
+            <if test ="alias != null">#{alias},</if>
+            <if test ="business_info !=null">#{business_info},</if>
+            <if test ="qrcode_url!=null">#{qrcode_url},</if>
+            <if test ="func_info!=null">#{func_info},</if>
+        </trim>
+    </sql>
+
+    <update id="updateRecord">
+        update wechat_user_access_tokens set
+        <trim suffix="" suffixOverrides=",">
+            <if test="user_name!= null">#{user_name},</if>
+            <if test="nick_name != null">#{nick_name},</if>
+            <if test="principal_name != null">#{principal_name},</if>
+            <if test="service_type_info != null">#{service_type_info},</if>
+            <if test="verify_type_info !=null">#{verify_type_info},</if>
+            <if test ="alias != null">#{alias},</if>
+            <if test ="business_info !=null">#{business_info},</if>
+            <if test ="qrcode_url!=null">#{qrcode_url},</if>
+            <if test ="func_info!=null">#{func_info},</if>
+        </trim>
+        where authorizerAppId=#{authorizerAppId}
+    </update>
+    <insert id="insertRecord">
+        insert into wechat_user_account_info(<include refid="userAccountInfoMsgRecordColumn"/>)
+        values (<include refid="userAccountInfoMsgRecordValue"/>)
+    </insert>
+</mapper>

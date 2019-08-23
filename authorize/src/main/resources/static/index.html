@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
 
+<script src="js/library/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/library/bootstrap.js"></script> <!-- Necessary-JavaScript-entity-For-Bootstrap -->
+<script src="js/library/angular.min.js"></script>
+<script type="text/javascript" src="js/library/angular-ui-router.min.js"></script>
+<script src="js/index.js"></script>
+<link rel="stylesheet" href="css/bootstrap.css"> <!-- Bootstrap-Core-CSS -->
+
+
+<body ng-controller="indexCtrl">
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="jumbotron">
+                <h1>
+                    Hello, world!
+                </h1>
+                <p>
+                    This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+                </p>
+                <p>
+                    <a class="btn btn-primary btn-large" ng-click="goAuthorize()">Learn more</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

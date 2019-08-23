@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <substitutionProperty name="LOG_HOME" value="logs"/>
+    <substitutionProperty name="PROJECT_NAME" value="authorize"/>
+    <property name="LOGGER_LEVEL" value="INFO"/>
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{0} [%line] [%-5level] - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <!-- 保存所有的日志 文件日志输出 -->
+    <!--RollingFileAppender滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件。-->
+    <appender name="authorize" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- file被写入的文件名，可以是相对目录，也可以是绝对目录，如果上级目录不存在会自动创建，没有默认值。-->
+        <file>${LOG_HOME}/${PROJECT_NAME}.log</file>
+        <!-- append如果是 true，日志被追加到文件结尾，如果是 false，清空现存文件，默认是true。-->
+        <append>true</append>
+        <!-- rollingPolicy当发生滚动时，决定 RollingFileAppender 的行为，涉及文件移动和重命名。-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${PROJECT_NAME}-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--日志保存天数-->
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+        <!-- 对记录事件进行格式化 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread][%logger{0}][%line][%-5level]- %msg%n</pattern>
+            <immediateFlush>true</immediateFlush>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="authorize"/>
+    </root>
+</configuration>
