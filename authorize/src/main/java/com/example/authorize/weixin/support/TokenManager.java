@@ -3,8 +3,10 @@ package com.example.authorize.weixin.support;
 import com.example.authorize.weixin.api.ComponentAPI;
 import com.example.authorize.weixin.api.TokenAPI;
 import com.example.authorize.weixin.consts.AuthorizeConsts;
+import com.example.authorize.weixin.dao.WeChatComponentAccessTokenDao;
 import com.example.authorize.weixin.dao.WeChatMsgAuthorizeDao;
 import com.example.authorize.weixin.entity.ComponentAccessToken;
+import com.example.authorize.weixin.entity.ComponentAccessTokenMsg;
 import com.example.authorize.weixin.entity.PreAuthCode;
 import com.example.authorize.weixin.entity.Token;
 import org.slf4j.Logger;
@@ -39,6 +41,8 @@ public class TokenManager {
 
 	@Autowired
 	WeChatMsgAuthorizeDao weChatMsgAuthorizeDao;
+	@Autowired
+	WeChatComponentAccessTokenDao weChatComponentAccessTokenDao;
 	@Autowired
 	RedisService redisService;
 
@@ -82,7 +86,7 @@ public class TokenManager {
 			for(int i=0;i<10;i++) {
 				component_verify_ticket = weChatMsgAuthorizeDao.getLastestComponentVerifyTickets(AuthorizeConsts.appId);
 				if (component_verify_ticket == null) {
-					Thread.sleep(10000);
+					Thread.sleep(60000);
 				}else{
 					break;
 				}
@@ -93,8 +97,7 @@ public class TokenManager {
 
 		try {
 			initComponentAccessToken(AuthorizeConsts.appId, AuthorizeConsts.appSecret, component_verify_ticket);
-			String componentAccessToken = redisService.get(AuthorizeConsts.appId + AuthorizeConsts.componentAccessToken);
-			initPreAuthCode(AuthorizeConsts.appId, componentAccessToken);
+			initPreAuthCode(AuthorizeConsts.appId);
 		}catch (Exception e){
 			logger.error("COMPONENT_ACCESS_TOKEN bad initialization",e);
 		}
@@ -103,8 +106,8 @@ public class TokenManager {
 		initComponentAccessToken(componentAppid,componentSecret,component_verify_ticket,10*60,118*60);
 
 	}
-	public void initPreAuthCode(String appid,String componentAccessToken){
-		initPreAuthCode(appid,componentAccessToken,11*60,570);
+	public void initPreAuthCode(String appid){
+		initPreAuthCode(appid,11*60,570);
 	}
 	/**
 	 * 初始化token 刷新，每118分钟刷新一次。
@@ -157,7 +160,7 @@ public class TokenManager {
 		}
 
 	}
-	public  void initPreAuthCode(final String appid,String componentAccessToken,int initialDelay,int delay){
+	public  void initPreAuthCode(final String appid,int initialDelay,int delay){
 		if(scheduledExecutorService == null){
 			initScheduledExecutorService();
 		}
@@ -166,12 +169,12 @@ public class TokenManager {
 		}
 		//立即执行一次
 		if(initialDelay == 0){
-			refreshPreAuthCode(appid, componentAccessToken);
+			refreshPreAuthCode(appid);
 		}
 		ScheduledFuture<?> scheduledFuture =  scheduledExecutorService.scheduleWithFixedDelay(new Runnable() {
 			@Override
 			public void run() {
-				refreshPreAuthCode(appid,componentAccessToken);
+				refreshPreAuthCode(appid);
 			}
 		},initialDelay == 0 ? delay : initialDelay,delay,TimeUnit.SECONDS);
 		futureMap.put(appid+AuthorizeConsts.preAuthCode, scheduledFuture);
@@ -179,9 +182,11 @@ public class TokenManager {
 
 	}
 
-	private  void refreshPreAuthCode(String appid,String componentAccessToken){
+	private  void refreshPreAuthCode(String appid){
 		try {
 			for(int i=0;i<10;i++){
+				String componentAccessToken=redisService.get(AuthorizeConsts.appId + AuthorizeConsts.componentAccessToken);
+
 				PreAuthCode preAuthCode = ComponentAPI.getApiPreauthcode(componentAccessToken, appid);
 				if(preAuthCode.isSuccess()){
 					redisService.set(appid+AuthorizeConsts.preAuthCode,preAuthCode.getPreAuthCode(),570);
@@ -189,7 +194,7 @@ public class TokenManager {
 				}
 				else{
 					logger.error("PRE_AUTH_CODE HttpRequest ERROR with appid:{}",appid);
-					Thread.sleep(1000);
+					Thread.sleep(10000);
 				}
 			}
 			logger.info("PRE_AUTH_CODE refurbish with appid:{}",appid);
@@ -228,6 +233,8 @@ public class TokenManager {
 			for(int i=0;i<10;i++) {
 				ComponentAccessToken componentAccessToken = ComponentAPI.getApiComponentToken(appid, secret, component_verify_ticket);
 				if (componentAccessToken.isSuccess()) {
+					ComponentAccessTokenMsg componentAccessTokenMsg =new ComponentAccessTokenMsg(AuthorizeConsts.appId,componentAccessToken.getComponentAccessToken(),componentAccessToken.getExpiresIn());
+					weChatComponentAccessTokenDao.insertRecord(componentAccessTokenMsg);
 					redisService.set(appid + AuthorizeConsts.componentAccessToken, componentAccessToken.getComponentAccessToken(), 118 * 60);
 					break;
 				}else{

@@ -48,7 +48,7 @@ public class AuthorizeController {
     }
 
     @RequestMapping(value="/authorizeUrl",method = RequestMethod.POST)
-    public String getAuthorizeUrl(@RequestParam("methodType") String methodType){
+    public String getAuthorizeUrl(@RequestParam("methodType") String methodType,@RequestParam("tid") String tid){
         try {
             if (methodType.equals("QR_CODE")) {
                 return ComponentAPI.getAuthUrlScan(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),AuthorizeConsts.redirect_url,"1" );
@@ -93,12 +93,15 @@ public class AuthorizeController {
 
     }
 
-    @RequestMapping(value="/finish",method = RequestMethod.POST)
-    public void getAuthCode(@RequestParam("auth_code") String auth_code,@RequestParam("expires_in") int expires_in){
+    @RequestMapping(value="/finish/{tid}",method = RequestMethod.POST)
+    public void getAuthCode(@PathVariable("tid")String tid, @RequestParam("auth_code") String auth_code,@RequestParam("expires_in") int expires_in){
 
-        msgAuthorizeService.saveUserAccessToken(auth_code,expires_in);
+
+        msgAuthorizeService.saveUserAccessToken(tid,auth_code,expires_in);
 
     }
+
+
 
     public String changeCharset(String str, String newCharset)
             throws UnsupportedEncodingException {
@@ -110,7 +113,5 @@ public class AuthorizeController {
         }
         return null;
     }
-
-
 
 }

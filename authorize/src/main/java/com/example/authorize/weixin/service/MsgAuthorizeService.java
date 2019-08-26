@@ -101,7 +101,7 @@ public class MsgAuthorizeService {
         return result;
 
     }
-    public void saveUserAccessToken(String auth_code,int expires_in){
+    public void saveUserAccessToken(String tid,String auth_code,int expires_in){
         try{
 
             String componentAccessToken = redisService.get(AuthorizeConsts.appId+AuthorizeConsts.componentAccessToken);
@@ -124,6 +124,7 @@ public class MsgAuthorizeService {
                 weChatUserAccessTokenDao.updateRecord(authorizeAccessTokenMsg);
                 logger.info("更新AUTH_ACCESS_TOKEN "+authorizeAccessTokenMsg.getAuthorizerAppId());
             }
+
             saveUserAccountInfo(authorization_info.getAuthorizer_appid());
 
         }catch (Exception e){

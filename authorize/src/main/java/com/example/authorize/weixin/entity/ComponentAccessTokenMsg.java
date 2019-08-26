@@ -1,11 +1,22 @@
 package com.example.authorize.weixin.entity;
 
+import com.example.authorize.weixin.consts.AuthorizeConsts;
+
 public class ComponentAccessTokenMsg {
     private int id;
     private String componentAppId;
     private String componentAccessToken;
     private int expiresIn;
     private Long createTime;
+
+
+    public ComponentAccessTokenMsg(String componentAppId,String componentAccessToken,int expiresIn){
+        this.componentAppId = componentAppId;
+        this.componentAccessToken =componentAccessToken;
+        this.expiresIn = expiresIn;
+        this.createTime =System.currentTimeMillis()/ AuthorizeConsts.ONE_SECOND;
+
+    }
 
     public void setId(int id) {
         this.id = id;
