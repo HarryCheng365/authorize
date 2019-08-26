@@ -198,6 +198,14 @@ public class ComponentAPI extends BaseAPI{
         return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
     }
 
+
+    /**
+     *
+     * @param componentAppid
+     * @param authorizer_appid
+     * @param tid
+     * @return
+     */
     public static BaseResult authorizeFinish(String componentAppid,String authorizer_appid,String tid ){
         String json="";
         if(authorizer_appid==null){

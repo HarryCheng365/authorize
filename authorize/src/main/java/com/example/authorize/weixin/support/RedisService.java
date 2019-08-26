@@ -22,18 +22,7 @@ public class RedisService implements ExpireKey {
 
 	@Autowired
 	RedisConfig redisConfig;
-	private JedisPool pool;
 
-	public RedisService() {
-	}
-
-	public RedisService(JedisPool pool) {
-		this.pool = pool;
-	}
-
-	public void setPool(JedisPool pool) {
-		this.pool = pool;
-	}
 
 	private Jedis getJedis() {
 		return redisConfig.getJedisPool().getResource();
@@ -49,7 +38,7 @@ public class RedisService implements ExpireKey {
 	public boolean add(String key, int expire) {
 		Jedis jedis = null;
 		try {
-			jedis = pool.getResource();
+			jedis = getJedis();
 			jedis.setex( key, expire, DEFAULT_VALUE);
 			return true;
 		} catch (Exception e) {
@@ -71,7 +60,7 @@ public class RedisService implements ExpireKey {
 	public boolean exists(String key) {
 		Jedis jedis = null;
 		try {
-			jedis = pool.getResource();
+			jedis = getJedis();
 			return jedis.exists(key);
 		} catch (Exception e) {
 			logger.error("", e);
@@ -124,7 +113,8 @@ public class RedisService implements ExpireKey {
 		String result =null;
 		Jedis jedis =null;
 		try{
-			jedis=pool.getResource();
+			logger.info(key);
+			jedis=getJedis();
 			result= jedis.get(key);
 		}catch (Exception e){
 			logger.error("",e);
@@ -304,7 +294,7 @@ public class RedisService implements ExpireKey {
 	 * @param value
 	 */
 	public Long saddL(int second, String key, String... value) {
-		Long lg = 0l;
+		Long lg = 0L;
 		Jedis jedis = null;
 		try {
 			jedis = getJedis();

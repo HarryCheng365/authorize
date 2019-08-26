@@ -14038,3 +14038,99 @@ java.lang.Exception: redis 获取数据失败!
 2019-08-26 15:20:07 [Thread-13][ThreadPoolTaskExecutor][208][INFO ]- Shutting down ExecutorService 'applicationTaskExecutor'
 2019-08-26 15:20:07 [Thread-13][HikariDataSource][350][INFO ]- HikariPool-1 - Shutdown initiated...
 2019-08-26 15:20:07 [Thread-13][HikariDataSource][352][INFO ]- HikariPool-1 - Shutdown completed.
+2019-08-26 18:43:56 [main][AuthorizeApplication][50][INFO ]- Starting AuthorizeApplication on weiyoujingtingshan.local with PID 48290 (/Users/Haoyu/Documents/authorize/authorize/target/classes started by Haoyu in /Users/Haoyu/Documents/authorize/authorize)
+2019-08-26 18:43:56 [main][AuthorizeApplication][651][INFO ]- The following profiles are active: dev
+2019-08-26 18:43:59 [main][TomcatWebServer][90][INFO ]- Tomcat initialized with port(s): 8082 (http)
+2019-08-26 18:43:59 [main][Http11NioProtocol][173][INFO ]- Initializing ProtocolHandler ["http-nio-8082"]
+2019-08-26 18:43:59 [main][StandardService][173][INFO ]- Starting service [Tomcat]
+2019-08-26 18:43:59 [main][StandardEngine][173][INFO ]- Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-26 18:43:59 [main][[/]][173][INFO ]- Initializing Spring embedded WebApplicationContext
+2019-08-26 18:43:59 [main][ContextLoader][284][INFO ]- Root WebApplicationContext: initialization completed in 2501 ms
+2019-08-26 18:44:00 [main][ThreadPoolTaskExecutor][171][INFO ]- Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-26 18:44:00 [main][WelcomePageHandlerMapping][54][INFO ]- Adding welcome page: class path resource [static/index.html]
+2019-08-26 18:44:00 [main][Http11NioProtocol][173][INFO ]- Starting ProtocolHandler ["http-nio-8082"]
+2019-08-26 18:44:00 [TokenManager][HikariDataSource][110][INFO ]- HikariPool-1 - Starting...
+2019-08-26 18:44:00 [TokenManager][DriverDataSource][68][WARN ]- Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2019-08-26 18:44:00 [main][TomcatWebServer][202][INFO ]- Tomcat started on port(s): 8082 (http) with context path ''
+2019-08-26 18:44:00 [main][AuthorizeApplication][59][INFO ]- Started AuthorizeApplication in 5.746 seconds (JVM running for 8.916)
+2019-08-26 18:44:00 [TokenManager][HikariDataSource][123][INFO ]- HikariPool-1 - Start completed.
+2019-08-26 18:44:42 [Thread-18][ThreadPoolTaskExecutor][208][INFO ]- Shutting down ExecutorService 'applicationTaskExecutor'
+2019-08-26 18:44:42 [Thread-18][HikariDataSource][350][INFO ]- HikariPool-1 - Shutdown initiated...
+2019-08-26 18:44:43 [Thread-18][HikariDataSource][352][INFO ]- HikariPool-1 - Shutdown completed.
+2019-08-26 18:44:52 [main][AuthorizeApplication][50][INFO ]- Starting AuthorizeApplication on weiyoujingtingshan.local with PID 48349 (/Users/Haoyu/Documents/authorize/authorize/target/classes started by Haoyu in /Users/Haoyu/Documents/authorize/authorize)
+2019-08-26 18:44:52 [main][AuthorizeApplication][651][INFO ]- The following profiles are active: dev
+2019-08-26 18:44:54 [main][TomcatWebServer][90][INFO ]- Tomcat initialized with port(s): 8082 (http)
+2019-08-26 18:44:54 [main][Http11NioProtocol][173][INFO ]- Initializing ProtocolHandler ["http-nio-8082"]
+2019-08-26 18:44:54 [main][StandardService][173][INFO ]- Starting service [Tomcat]
+2019-08-26 18:44:54 [main][StandardEngine][173][INFO ]- Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-26 18:44:54 [main][[/]][173][INFO ]- Initializing Spring embedded WebApplicationContext
+2019-08-26 18:44:54 [main][ContextLoader][284][INFO ]- Root WebApplicationContext: initialization completed in 2043 ms
+2019-08-26 18:44:55 [main][ThreadPoolTaskExecutor][171][INFO ]- Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-26 18:44:55 [main][WelcomePageHandlerMapping][54][INFO ]- Adding welcome page: class path resource [static/index.html]
+2019-08-26 18:44:55 [main][Http11NioProtocol][173][INFO ]- Starting ProtocolHandler ["http-nio-8082"]
+2019-08-26 18:44:55 [main][TomcatWebServer][202][INFO ]- Tomcat started on port(s): 8082 (http) with context path ''
+2019-08-26 18:44:55 [main][AuthorizeApplication][59][INFO ]- Started AuthorizeApplication in 4.019 seconds (JVM running for 5.046)
+2019-08-26 18:44:55 [TokenManager][RedisService][130][ERROR]- 
+java.lang.NullPointerException: null
+	at com.example.authorize.weixin.support.RedisService.get(RedisService.java:127)
+	at com.example.authorize.weixin.support.TokenManager.initAll(TokenManager.java:86)
+	at com.example.authorize.weixin.support.ApplicationStartup$2.run(ApplicationStartup.java:28)
+	at java.lang.Thread.run(Thread.java:748)
+2019-08-26 18:44:55 [TokenManager][TokenManager][88][ERROR]- 
+java.lang.Exception: redis 获取数据失败!
+	at com.example.authorize.weixin.support.RedisService.get(RedisService.java:131)
+	at com.example.authorize.weixin.support.TokenManager.initAll(TokenManager.java:86)
+	at com.example.authorize.weixin.support.ApplicationStartup$2.run(ApplicationStartup.java:28)
+	at java.lang.Thread.run(Thread.java:748)
+2019-08-26 18:44:55 [TokenManager][HikariDataSource][110][INFO ]- HikariPool-1 - Starting...
+2019-08-26 18:44:55 [TokenManager][DriverDataSource][68][WARN ]- Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2019-08-26 18:44:55 [TokenManager][HikariDataSource][123][INFO ]- HikariPool-1 - Start completed.
+2019-08-26 18:45:02 [Thread-14][ThreadPoolTaskExecutor][208][INFO ]- Shutting down ExecutorService 'applicationTaskExecutor'
+2019-08-26 18:45:02 [Thread-14][HikariDataSource][350][INFO ]- HikariPool-1 - Shutdown initiated...
+2019-08-26 18:45:02 [Thread-14][HikariDataSource][352][INFO ]- HikariPool-1 - Shutdown completed.
+2019-08-26 18:47:00 [main][AuthorizeApplication][50][INFO ]- Starting AuthorizeApplication on weiyoujingtingshan.local with PID 48365 (/Users/Haoyu/Documents/authorize/authorize/target/classes started by Haoyu in /Users/Haoyu/Documents/authorize/authorize)
+2019-08-26 18:47:00 [main][AuthorizeApplication][651][INFO ]- The following profiles are active: dev
+2019-08-26 18:47:02 [main][TomcatWebServer][90][INFO ]- Tomcat initialized with port(s): 8082 (http)
+2019-08-26 18:47:02 [main][Http11NioProtocol][173][INFO ]- Initializing ProtocolHandler ["http-nio-8082"]
+2019-08-26 18:47:02 [main][StandardService][173][INFO ]- Starting service [Tomcat]
+2019-08-26 18:47:02 [main][StandardEngine][173][INFO ]- Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-26 18:47:02 [main][[/]][173][INFO ]- Initializing Spring embedded WebApplicationContext
+2019-08-26 18:47:02 [main][ContextLoader][284][INFO ]- Root WebApplicationContext: initialization completed in 1972 ms
+2019-08-26 18:47:02 [main][ThreadPoolTaskExecutor][171][INFO ]- Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-26 18:47:02 [main][WelcomePageHandlerMapping][54][INFO ]- Adding welcome page: class path resource [static/index.html]
+2019-08-26 18:47:03 [main][Http11NioProtocol][173][INFO ]- Starting ProtocolHandler ["http-nio-8082"]
+2019-08-26 18:47:03 [main][TomcatWebServer][202][INFO ]- Tomcat started on port(s): 8082 (http) with context path ''
+2019-08-26 18:47:03 [main][AuthorizeApplication][59][INFO ]- Started AuthorizeApplication in 3.837 seconds (JVM running for 5.353)
+2019-08-26 18:47:03 [TokenManager][RedisService][127][INFO ]- 123
+2019-08-26 18:47:03 [TokenManager][RedisService][131][ERROR]- 
+java.lang.NullPointerException: null
+	at com.example.authorize.weixin.support.RedisService.get(RedisService.java:128)
+	at com.example.authorize.weixin.support.TokenManager.initAll(TokenManager.java:86)
+	at com.example.authorize.weixin.support.ApplicationStartup$2.run(ApplicationStartup.java:28)
+	at java.lang.Thread.run(Thread.java:748)
+2019-08-26 18:47:03 [TokenManager][TokenManager][88][ERROR]- 
+java.lang.Exception: redis 获取数据失败!
+	at com.example.authorize.weixin.support.RedisService.get(RedisService.java:132)
+	at com.example.authorize.weixin.support.TokenManager.initAll(TokenManager.java:86)
+	at com.example.authorize.weixin.support.ApplicationStartup$2.run(ApplicationStartup.java:28)
+	at java.lang.Thread.run(Thread.java:748)
+2019-08-26 18:47:03 [TokenManager][HikariDataSource][110][INFO ]- HikariPool-1 - Starting...
+2019-08-26 18:47:03 [TokenManager][DriverDataSource][68][WARN ]- Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2019-08-26 18:47:03 [TokenManager][HikariDataSource][123][INFO ]- HikariPool-1 - Start completed.
+2019-08-26 18:48:28 [Thread-15][ThreadPoolTaskExecutor][208][INFO ]- Shutting down ExecutorService 'applicationTaskExecutor'
+2019-08-26 18:48:30 [Thread-15][HikariDataSource][350][INFO ]- HikariPool-1 - Shutdown initiated...
+2019-08-26 18:48:30 [Thread-15][HikariDataSource][352][INFO ]- HikariPool-1 - Shutdown completed.
+2019-08-26 18:48:36 [main][AuthorizeApplication][50][INFO ]- Starting AuthorizeApplication on weiyoujingtingshan.local with PID 48372 (/Users/Haoyu/Documents/authorize/authorize/target/classes started by Haoyu in /Users/Haoyu/Documents/authorize/authorize)
+2019-08-26 18:48:36 [main][AuthorizeApplication][651][INFO ]- The following profiles are active: dev
+2019-08-26 18:48:38 [main][TomcatWebServer][90][INFO ]- Tomcat initialized with port(s): 8082 (http)
+2019-08-26 18:48:38 [main][Http11NioProtocol][173][INFO ]- Initializing ProtocolHandler ["http-nio-8082"]
+2019-08-26 18:48:38 [main][StandardService][173][INFO ]- Starting service [Tomcat]
+2019-08-26 18:48:38 [main][StandardEngine][173][INFO ]- Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-26 18:48:39 [main][[/]][173][INFO ]- Initializing Spring embedded WebApplicationContext
+2019-08-26 18:48:39 [main][ContextLoader][284][INFO ]- Root WebApplicationContext: initialization completed in 2384 ms
+2019-08-26 18:48:39 [main][ThreadPoolTaskExecutor][171][INFO ]- Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-26 18:48:40 [main][WelcomePageHandlerMapping][54][INFO ]- Adding welcome page: class path resource [static/index.html]
+2019-08-26 18:48:40 [main][Http11NioProtocol][173][INFO ]- Starting ProtocolHandler ["http-nio-8082"]
+2019-08-26 18:48:40 [main][TomcatWebServer][202][INFO ]- Tomcat started on port(s): 8082 (http) with context path ''
+2019-08-26 18:48:40 [main][AuthorizeApplication][59][INFO ]- Started AuthorizeApplication in 5.712 seconds (JVM running for 8.889)
+2019-08-26 18:48:53 [TokenManager][RedisService][127][INFO ]- 123

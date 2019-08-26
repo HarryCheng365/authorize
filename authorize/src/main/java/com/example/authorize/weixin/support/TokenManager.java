@@ -81,9 +81,16 @@ public class TokenManager {
 		this.daemon = daemon;
 	}
 	public void initAll(){
+		try {
+			redisService.set("123","321",6000);
+			logger.info("redis 测试"+redisService.get("123"));
+		}catch (Exception e){
+			logger.error("",e);
+
+		}
 		String component_verify_ticket=null;
 		try {
-			for(int i=0;i<10;i++) {
+			for(int i=0;i<12;i++) {
 				component_verify_ticket = weChatMsgAuthorizeDao.getLastestComponentVerifyTickets(AuthorizeConsts.appId);
 				if (component_verify_ticket == null) {
 					Thread.sleep(60000);
@@ -95,6 +102,7 @@ public class TokenManager {
 			logger.error("COMPONENT_VERIFY_TICKET is not exist in the database",e);
 		}
 
+
 		try {
 			initComponentAccessToken(AuthorizeConsts.appId, AuthorizeConsts.appSecret, component_verify_ticket);
 			initPreAuthCode(AuthorizeConsts.appId);
@@ -103,11 +111,11 @@ public class TokenManager {
 		}
 	}
 	public void initComponentAccessToken(String componentAppid, String componentSecret,String component_verify_ticket){
-		initComponentAccessToken(componentAppid,componentSecret,component_verify_ticket,10*60,118*60);
+		initComponentAccessToken(componentAppid,componentSecret,component_verify_ticket,0,118*60);
 
 	}
 	public void initPreAuthCode(String appid){
-		initPreAuthCode(appid,11*60,570);
+		initPreAuthCode(appid,60,570);
 	}
 	/**
 	 * 初始化token 刷新，每118分钟刷新一次。
