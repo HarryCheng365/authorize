@@ -3,6 +3,7 @@ package com.example.authorize.weixin.service;
 
 import com.example.authorize.weixin.aes.WXBizMsgCrypt;
 import com.example.authorize.weixin.api.ComponentAPI;
+import com.example.authorize.weixin.client.BaseResult;
 import com.example.authorize.weixin.consts.AuthorizeConsts;
 import com.example.authorize.weixin.dao.WeChatMsgAuthorizeDao;
 import com.example.authorize.weixin.dao.WeChatUserAccessTokenDao;
@@ -151,8 +152,15 @@ public class MsgAuthorizeService {
                     authorizerInfo.getBusiness_info().toString(), authorizerInfo.getQrcode_url(),
                     authorizationInfo.getFunc_info().toString());
             weChatUserAccountInfoDao.insertRecord(authorizeAccountInfoMsg);
-
-
+            for(int i=0;i<10;i++){
+                BaseResult baseResult=ComponentAPI.authorizeFinish(AuthorizeConsts.appId,authorizer_appid,tid);
+                if(baseResult.isSuccess()){
+                    break;
+                }else{
+                    logger.error("授权信息送回网易号失败:{},{}",baseResult.getErrcode(),baseResult.getErrmsg());
+                    Thread.sleep(5000);
+                }
+            }
         }catch (Exception e){
             logger.error("AUTHORIZER_ACCOUNT_INFO error",e);
         }

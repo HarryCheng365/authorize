@@ -6,6 +6,7 @@ import com.example.authorize.weixin.entity.*;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.StringEntity;
+import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -197,7 +198,19 @@ public class ComponentAPI extends BaseAPI{
         return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
     }
 
-    public static BaseResult authorizeSuccess(String componentAppid,String authorizer_id,String tid ){
+    public static BaseResult authorizeFinish(String componentAppid,String authorizer_appid,String tid ){
+        String json="";
+        if(authorizer_appid==null){
+            json=String.format("{\"errorcode\":\"%1$s\",\"msg\":\"%2$s\",\"tid\":\"%3$s\"}","503","未授权成功",tid);
+        }else{
+            json=String.format("{\"component_appid\":\"%1$s\",\"authorizer_appid\":\"%2$s\",\"tid\":\"%3$s\"}",componentAppid,authorizer_appid,tid);
+        }
+        HttpUriRequest httpUriRequest = RequestBuilder.post()
+                .setHeader(jsonHeader)
+                .setUri("")
+                .setEntity(new StringEntity(json,Charset.forName("utf-8")))
+                .build();
+        return LocalHttpClient.executeJsonResult(httpUriRequest,BaseResult.class);
 
     }
 
