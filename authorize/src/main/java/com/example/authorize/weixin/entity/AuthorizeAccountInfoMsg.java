@@ -2,6 +2,7 @@ package com.example.authorize.weixin.entity;
 
 public class AuthorizeAccountInfoMsg {
 
+    private String tid;
     private String authorizerAppId;
     private String user_name;
     private String nick_name;
@@ -14,8 +15,10 @@ public class AuthorizeAccountInfoMsg {
     private String qrcode_url;
     private String func_info;
 
-    public AuthorizeAccountInfoMsg(String authorizerAppId,String user_name,String nick_name,String principal_name,String head_img,
+
+    public AuthorizeAccountInfoMsg(String tid,String authorizerAppId,String user_name,String nick_name,String principal_name,String head_img,
                                    Integer service_type_info,Integer verify_type_info,String alias,String business_info,String qrcode_url,String func_info){
+        this.tid=tid;
         this.authorizerAppId =authorizerAppId;
         this.user_name=user_name;
         this.nick_name=nick_name;
@@ -27,6 +30,14 @@ public class AuthorizeAccountInfoMsg {
         this.business_info=business_info;
         this.qrcode_url=qrcode_url;
         this.func_info=func_info;
+    }
+
+    public String getTid() {
+        return tid;
+    }
+
+    public void setTid(String tid) {
+        this.tid = tid;
     }
 
     public void setAuthorizerAppId(String authorizerAppId) {

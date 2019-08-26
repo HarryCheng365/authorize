@@ -125,7 +125,7 @@ public class MsgAuthorizeService {
                 logger.info("更新AUTH_ACCESS_TOKEN "+authorizeAccessTokenMsg.getAuthorizerAppId());
             }
 
-            saveUserAccountInfo(authorization_info.getAuthorizer_appid());
+            saveUserAccountInfo(authorization_info.getAuthorizer_appid(),tid);
 
         }catch (Exception e){
             logger.error("AUTH_ACCESS_TOKEN error",e);
@@ -134,7 +134,7 @@ public class MsgAuthorizeService {
 
     }
 
-    public void saveUserAccountInfo(String authorizer_appid){
+    public void saveUserAccountInfo(String authorizer_appid,String tid){
         try {
             String componentAccessToken = redisService.get(AuthorizeConsts.appId + AuthorizeConsts.componentAccessToken);
             ApiGetAuthorizerInfoResult apiGetAuthorizerInfoResult = null;
@@ -146,7 +146,7 @@ public class MsgAuthorizeService {
             }
             ApiGetAuthorizerInfoResult.Authorization_info authorizationInfo = apiGetAuthorizerInfoResult.getAuthorization_info();
             ApiGetAuthorizerInfoResult.Authorizer_info authorizerInfo = apiGetAuthorizerInfoResult.getAuthorizer_info();
-            AuthorizeAccountInfoMsg authorizeAccountInfoMsg = new AuthorizeAccountInfoMsg(authorizationInfo.getAuthorizer_appid(), authorizerInfo.getUser_name(), authorizerInfo.getNick_name(),
+            AuthorizeAccountInfoMsg authorizeAccountInfoMsg = new AuthorizeAccountInfoMsg(tid,authorizationInfo.getAuthorizer_appid(), authorizerInfo.getUser_name(), authorizerInfo.getNick_name(),
                     authorizerInfo.getPrincipal_name(), authorizerInfo.getHead_img(), authorizerInfo.getService_type_info().getId(), authorizerInfo.getVerify_type_info().getId(), authorizerInfo.getAlias(),
                     authorizerInfo.getBusiness_info().toString(), authorizerInfo.getQrcode_url(),
                     authorizationInfo.getFunc_info().toString());
@@ -156,6 +156,14 @@ public class MsgAuthorizeService {
             logger.error("AUTHORIZER_ACCOUNT_INFO error",e);
         }
     }
+
+
+    /**
+     * 根据authorizer_appid去取相应的access_token token采用lazy的方式 不会自动刷新，如果发现redis缓存里没有，那么就去数据库中取出
+     * refreshToken 进行刷新
+     * @param authorizer_appid
+     * @return
+     */
 
     public String getUserAccessToken(String authorizer_appid){
         String userAccessToken=null;
