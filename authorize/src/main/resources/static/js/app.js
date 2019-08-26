@@ -84,10 +84,11 @@
                     realUrl=$scope.mobileBaseUrl + "action=bindcomponent" + "&" + $scope.auth_type + "=" + authType + "&no_scan=1" + "&" +
                         $scope.component_appid + "=" + componentAppid + "&" + $scope.pre_auth_code + "=" + preAuthCode + "&" + $scope.redirect_url + "=" + redirectUrl;
                 }
+
                 if($scope.errorMessage!=null&&$scope.errorMessage!==""&&$scope.errorMessage!==undefined)
                     $scope.goErrorPage();
                 else{
-                    window.location.href = $scope.realUrl;
+                    window.location.href = realUrl;
                 }
                 }, function errorCallback(response) {
                 $scope.errorMessage=response.data;

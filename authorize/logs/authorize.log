@@ -14134,3 +14134,18 @@ java.lang.Exception: redis 获取数据失败!
 2019-08-26 18:48:40 [main][TomcatWebServer][202][INFO ]- Tomcat started on port(s): 8082 (http) with context path ''
 2019-08-26 18:48:40 [main][AuthorizeApplication][59][INFO ]- Started AuthorizeApplication in 5.712 seconds (JVM running for 8.889)
 2019-08-26 18:48:53 [TokenManager][RedisService][127][INFO ]- 123
+2019-08-26 19:48:54 [TokenManager][RedisService][131][ERROR]- 
+java.lang.NullPointerException: null
+	at com.example.authorize.weixin.support.RedisService.get(RedisService.java:128)
+	at com.example.authorize.weixin.support.TokenManager.initAll(TokenManager.java:86)
+	at com.example.authorize.weixin.support.ApplicationStartup$2.run(ApplicationStartup.java:28)
+	at java.lang.Thread.run(Thread.java:748)
+2019-08-26 19:48:54 [TokenManager][TokenManager][88][ERROR]- 
+java.lang.Exception: redis 获取数据失败!
+	at com.example.authorize.weixin.support.RedisService.get(RedisService.java:132)
+	at com.example.authorize.weixin.support.TokenManager.initAll(TokenManager.java:86)
+	at com.example.authorize.weixin.support.ApplicationStartup$2.run(ApplicationStartup.java:28)
+	at java.lang.Thread.run(Thread.java:748)
+2019-08-26 19:48:54 [TokenManager][HikariDataSource][110][INFO ]- HikariPool-1 - Starting...
+2019-08-26 19:48:54 [TokenManager][DriverDataSource][68][WARN ]- Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2019-08-26 19:48:54 [Thread-19][ThreadPoolTaskExecutor][208][INFO ]- Shutting down ExecutorService 'applicationTaskExecutor'

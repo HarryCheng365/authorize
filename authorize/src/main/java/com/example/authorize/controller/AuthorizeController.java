@@ -51,10 +51,10 @@ public class AuthorizeController {
     public String getAuthorizeUrl(@RequestParam("methodType") String methodType,@RequestParam("tid") String tid){
         try {
             if (methodType.equals("QR_CODE")) {
-                return ComponentAPI.getAuthUrlScan(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),AuthorizeConsts.redirect_url,"1" );
+                return ComponentAPI.getAuthUrlScan(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),genRedirectUrl(AuthorizeConsts.redirect_url,tid),"3" );
 
             } else {
-                return ComponentAPI.getAuthUrl(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),AuthorizeConsts.redirect_url,"1" );
+                return ComponentAPI.getAuthUrl(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),genRedirectUrl(AuthorizeConsts.redirect_url,tid),"3" );
             }
         }catch (Exception e){
             LOG.error("AuthUrl 生成失败",e);
@@ -64,6 +64,7 @@ public class AuthorizeController {
         }
 
     }
+
 
     /**
      *
@@ -80,7 +81,7 @@ public class AuthorizeController {
             response.put("component_appid", AuthorizeConsts.appId);
             response.put("pre_auth_code", msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId));
             response.put("redirect_url", changeCharset(AuthorizeConsts.redirect_url, "utf-8"));
-            response.put("auth_type", "1");
+            response.put("auth_type", "3");
             result=response.toJSONString();
 
         }catch (Exception e){
@@ -117,4 +118,16 @@ public class AuthorizeController {
         return null;
     }
 
+    private String genRedirectUrl(String baseUrl,String appendix){
+        String result="";
+        try {
+             result= baseUrl + appendix;
+            result = changeCharset(result, "utf-8");
+        }catch (Exception e){
+            LOG.error("AuthUrl 转换失败",e);
+        }
+        return result;
+
+
+    }
 }
