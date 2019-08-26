@@ -30,5 +30,5 @@ build/
 ### VS Code ###
 .vscode/
 ### mac ###
-*.DS_Store
-*.log
+.DS_Store
+authorize.log

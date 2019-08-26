@@ -14004,3 +14004,37 @@ Caused by: java.lang.Exception: redis 获取数据失败!
 	at com.example.authorize.weixin.service.MsgAuthorizeService.getComponentAccessToken(MsgAuthorizeService.java:73)
 	at com.example.authorize.weixin.service.MsgAuthorizeService.getPreAuthCode(MsgAuthorizeService.java:85)
 	... 55 common frames omitted
+2019-08-26 15:10:52 [Thread-14][ThreadPoolTaskExecutor][208][INFO ]- Shutting down ExecutorService 'applicationTaskExecutor'
+2019-08-26 15:18:16 [main][AuthorizeApplication][50][INFO ]- Starting AuthorizeApplication on weiyoujingtingshan.local with PID 45322 (/Users/Haoyu/Documents/authorize/authorize/target/classes started by Haoyu in /Users/Haoyu/Documents/authorize/authorize)
+2019-08-26 15:18:16 [main][AuthorizeApplication][651][INFO ]- The following profiles are active: dev
+2019-08-26 15:18:18 [main][TomcatWebServer][90][INFO ]- Tomcat initialized with port(s): 8082 (http)
+2019-08-26 15:18:18 [main][Http11NioProtocol][173][INFO ]- Initializing ProtocolHandler ["http-nio-8082"]
+2019-08-26 15:18:18 [main][StandardService][173][INFO ]- Starting service [Tomcat]
+2019-08-26 15:18:18 [main][StandardEngine][173][INFO ]- Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-26 15:18:18 [main][[/]][173][INFO ]- Initializing Spring embedded WebApplicationContext
+2019-08-26 15:18:18 [main][ContextLoader][284][INFO ]- Root WebApplicationContext: initialization completed in 2339 ms
+2019-08-26 15:18:19 [main][ThreadPoolTaskExecutor][171][INFO ]- Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-26 15:18:19 [main][WelcomePageHandlerMapping][54][INFO ]- Adding welcome page: class path resource [static/index.html]
+2019-08-26 15:18:19 [main][Http11NioProtocol][173][INFO ]- Starting ProtocolHandler ["http-nio-8082"]
+2019-08-26 15:18:19 [TokenManager][HikariDataSource][110][INFO ]- HikariPool-1 - Starting...
+2019-08-26 15:18:19 [TokenManager][DriverDataSource][68][WARN ]- Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2019-08-26 15:18:19 [main][TomcatWebServer][202][INFO ]- Tomcat started on port(s): 8082 (http) with context path ''
+2019-08-26 15:18:19 [main][AuthorizeApplication][59][INFO ]- Started AuthorizeApplication in 4.334 seconds (JVM running for 5.769)
+2019-08-26 15:18:19 [TokenManager][HikariDataSource][123][INFO ]- HikariPool-1 - Start completed.
+2019-08-26 15:20:00 [TokenManager][TokenManager][51][INFO ]- daemon:true,poolSize:5
+2019-08-26 15:20:00 [TokenManager][TokenManager][222][INFO ]- COMPONENT_ACCESS_TOKEN appid:wxe123afcba60fb48a
+2019-08-26 15:20:00 [TokenManager][RedisService][130][ERROR]- 
+java.lang.NullPointerException: null
+	at com.example.authorize.weixin.support.RedisService.get(RedisService.java:127)
+	at com.example.authorize.weixin.support.TokenManager.initAll(TokenManager.java:96)
+	at com.example.authorize.weixin.support.ApplicationStartup$2.run(ApplicationStartup.java:28)
+	at java.lang.Thread.run(Thread.java:748)
+2019-08-26 15:20:00 [TokenManager][TokenManager][99][ERROR]- COMPONENT_ACCESS_TOKEN bad initialization
+java.lang.Exception: redis 获取数据失败!
+	at com.example.authorize.weixin.support.RedisService.get(RedisService.java:131)
+	at com.example.authorize.weixin.support.TokenManager.initAll(TokenManager.java:96)
+	at com.example.authorize.weixin.support.ApplicationStartup$2.run(ApplicationStartup.java:28)
+	at java.lang.Thread.run(Thread.java:748)
+2019-08-26 15:20:07 [Thread-13][ThreadPoolTaskExecutor][208][INFO ]- Shutting down ExecutorService 'applicationTaskExecutor'
+2019-08-26 15:20:07 [Thread-13][HikariDataSource][350][INFO ]- HikariPool-1 - Shutdown initiated...
+2019-08-26 15:20:07 [Thread-13][HikariDataSource][352][INFO ]- HikariPool-1 - Shutdown completed.

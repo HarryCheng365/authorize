@@ -2,6 +2,7 @@ package com.example.authorize.weixin.support;
 
 import com.example.authorize.weixin.entity.Token;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.ContextStartedEvent;
 
 import java.util.concurrent.LinkedBlockingDeque;
@@ -9,9 +10,9 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class ApplicationStartup implements ApplicationListener<ContextStartedEvent> {
+public class ApplicationStartup implements ApplicationListener<ContextRefreshedEvent> {
     @Override
-    public void onApplicationEvent(ContextStartedEvent contextStartedEvent) {
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 5, 60,
                 TimeUnit.SECONDS, new LinkedBlockingDeque<>(), new ThreadFactory() {
             @Override
@@ -20,7 +21,7 @@ public class ApplicationStartup implements ApplicationListener<ContextStartedEve
             }
         });
 
-        TokenManager tokenManager = contextStartedEvent.getApplicationContext().getBean(TokenManager.class);
+        TokenManager tokenManager =contextRefreshedEvent.getApplicationContext().getBean(TokenManager.class);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
