@@ -1,35 +1,455 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myApp">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+	<title>Home</title>
+
+	<!-- Meta tag Keywords -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta name="keywords" content="" />
+	<script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+	</script>
+	<!--// Meta tag Keywords -->
+
+	<!-- banner slider css -->
+	<link href="css/minimal-slider.css" rel='stylesheet' type='text/css' />
+	<!-- //banner slider css -->
+
+	<!-- css files -->
+	<link rel="stylesheet" href="css/bootstrap.css"> <!-- Bootstrap-Core-CSS -->
+	<link href="css/style6.css" rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" /> <!-- Style-CSS -->
+	<link rel="stylesheet" href="css/fontawesome-all.css"> <!-- Font-Awesome-Icons-CSS -->
+    <!-- //css files -->
+
+	<!--web font-->
+	<!--<link href="http://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=latin-ext" rel="stylesheet">-->
+	<!--//web font-->
+
 </head>
 
-<script src="js/library/jquery-2.1.4.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/library/bootstrap.js"></script> <!-- Necessary-JavaScript-entity-For-Bootstrap -->
-<script src="js/library/angular.min.js"></script>
-<script type="text/javascript" src="js/library/angular-ui-router.min.js"></script>
-<script src="js/index.js"></script>
-<link rel="stylesheet" href="css/bootstrap.css"> <!-- Bootstrap-Core-CSS -->
+<body ng-controller="indexCtrl" ng-init="init()">
+
+<!-- header -->
+<div class="header-top">
+	<header>
+		<div class="clearfix" >
+			<div class="top-head ml-lg-auto text-center" style="padding-top: 6px;padding-bottom: 0px">
+			<div class="row" style="margin-left: 10px;margin-right: 10px">
+
+				<div class="col-lg-4" >
+				</div>
+				<div class="col-lg-1" >
+				</div>
+				<div class="col-md-3 col-3 sign-btn" style="padding-left: 1rem;padding-right: 0px;max-width: 25%">
+					<a href="#" data-toggle="modal" data-target="#exampleModalCenter" style="font-size: 0.9rem">
+						<i class="fas fa-lock"></i> Sign In</a>
+				</div>
+				<div class="col-md-3 col-3 sign-btn" style=" padding-left:0px;padding-right: 0px;max-width: 25%" >
+					<a href="#" data-toggle="modal" data-target="#exampleModalCenter2" style="font-size: 0.9rem">
+						<i class="fas fa-user"></i> Register</a>
+				</div>
+				
+			
+				
+						<button id="trigger-overlay" style="padding-left:10px; padding-right:0px; padding-top: 0px;padding-bottom: 6px" type="button">
+							<i class="fas fa-search"></i>
+						</button>
+		
+
+					<!-- open/close -->
+					<div class="overlay overlay-door">
+						<button type="button" class="overlay-close">
+							<i class="fa fa-times" aria-hidden="true"></i>
+						</button>
+						<form action="#" method="post" class="d-flex">
+							<input class="form-control" type="search" placeholder="Search here..." required="">
+							<button type="submit" class="btn btn-primary submit">
+								<i class="fas fa-search"></i>
+							</button>
+						</form>
+				
+					<!-- open/close -->
+			</div>
+			</div>
+		</div>
+
+		</div>
+		<nav class="navbar navbar-expand-lg navbar-light" style="padding-top: 0px;padding-bottom: 0px">
+			<div class="logo">
+				<h1>
+					<a class="navbar-brand" href="index.html">
+						<i class="fab fa-cloudversify"></i> Deep OCR</a>
+				</h1>
+			</div>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon">
+					<i class="fas fa-bars"></i>
+				</span>
+
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-lg-auto text-center">
+					<li class="nav-item" style="padding-top: 0px;padding-bottom: 0px">
+						<a class="nav-link" href="#">Home
+							<span class="sr-only">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item" style="padding-top: 0px;padding-bottom: 0px" ui-sref="about">
+						<a class="nav-link" href="#">About</a>
+					</li>
+
+				</ul>
+
+			</div>
+		</nav>
+	</header>
+</div>
 
 
-<body ng-controller="indexCtrl">
-<div class="container">
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-            <div class="jumbotron">
-                <h1>
-                    Hello, world!
-                </h1>
-                <p>
-                    This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
-                </p>
-                <p>
-                    <a class="btn btn-primary btn-large" ng-click="goAuthorize()">Learn more</a>
-                </p>
+
+<!-- end of main image slider container -->
+
+
+<div class="content-wrapper">
+	<div ui-view></div>
+</div>
+
+<!-- brands -->
+<section class="partners bg-light py-5">
+	<div class="container">
+		<div class="row partner-grids text-center">
+			<div class="col-md-2 col-4">
+				<div class="brand bg-white">
+					<a href="#"><i class="fab fa-angrycreative"></i></a>
+				</div>
+			</div>
+			<div class="col-md-2 col-4">
+				<div class="brand bg-white">
+					<a href="#"><i class="fab fa-instagram"></i></a>
+				</div>
+			</div>
+			<div class="col-md-2 col-4">
+				<div class="brand bg-white">
+					<a href="#"><i class="fab fa-apple-pay"></i></a>
+				</div>
+			</div>
+			<div class="col-md-2 col-4 mt-md-0 mt-3">
+				<div class="brand bg-white">
+					<a href="#"><i class="fab fa-aviato"></i></a>
+				</div>
+			</div>
+			<div class="col-md-2 col-4 mt-md-0 mt-3">
+				<div class="brand bg-white">
+					<a href="#"><i class="fab fa-aws"></i></a>
+				</div>
+			</div>
+			<div class="col-md-2 col-4 mt-md-0 mt-3">
+				<div class="brand bg-white">
+					<a href="#"><i class="fab fa-amazon-pay"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- //brands -->
+
+<!-- footer -->
+<footer class="footer py-5">
+	<div class="container py-sm-4">
+		<div class="row">
+			<div class="col-lg-4 col-md-6 footer-top">
+				<h3 class="mb-4 pb-3 w3f_title">About Project</h3>
+				<p>It's a new project. If you have any new idea about improving this project or you meet some bugs when using it, please contact us.</p>
+			</div>
+			<div class="col-lg-2  col-md-6 footv3-left mt-md-0 mt-5">
+				<h3 class="mb-4 pb-3 w3f_title">Navigation</h3>
+				<ul class="list-agileits">
+					<li>
+						<a href="index.html">
+							Home
+						</a>
+					</li>
+					<li class="my-2">
+						<a href="about.html">
+							About Us
+						</a>
+					</li>
+					<li class="my-2">
+						<a href="projects.html">
+							Projects
+						</a>
+					</li>
+					<li class="mb-2">
+						<a href="features.html">
+							Features
+						</a>
+					</li>
+					<li>
+						<a href="contact.html">
+							Contact Us
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-lg-3 col-md-6 mt-lg-0 mt-5">
+				<h3 class="mb-4 pb-3 w3f_title">Contact Us</h3>
+				<div class="fv3-contact">
+					<span class="fas fa-envelope-open mr-2"></span>
+					<p>
+						<a href="mailto:example@email.com"> </a>
+					</p>
+				</div>
+				<div class="fv3-contact my-3">
+					<span class="fas fa-phone-volume mr-2"></span>
+					<p> </p>
+				</div>
+				<div class="fv3-contact">
+					<span class="fas fa-home mr-2"></span>
+					<p> </p>
+				</div>
+			</div>
+
+			<div class="col-lg-3 col-md-6 footerv2-w3ls mt-lg-0 mt-5">
+				<h3 class="mb-4 w3f_title pb-3">Get In Touch</h3>
+				<p>Chances are that you can see us in these platforms in the future.</p>
+				<ul class="social-iconsv2 agileinfo mt-4">
+					<li>
+						<a href="#">
+							<i class="fab fa-facebook-f"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fab fa-twitter"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fab fa-google-plus-g"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fab fa-linkedin-in"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- //footer bottom -->
+</footer>
+<!-- //footer -->
+
+<!-- copyright -->
+<div class="cpy-right text-center">
+	<p>Copyright &copy; 2018.Company name All rights reserved  &nbsp;&nbsp;<a href="https://github.com/HarryCheng365/DeepOCR-For-Cards"> </a>
+	</p>
+</div>
+<!-- //copyright -->
+
+	<!--model-forms-->
+    <!--/Login-->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="login px-4 mx-auto mw-100">
+                        <h5 class="text-center mb-4">Login Now</h5>
+                        <form action="#" method="post">
+                            <div class="form-group">
+                                <label class="mb-2">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" required="">
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="mb-2">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="" required="">
+                            </div>
+                            <div class="form-check mb-2">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary submit mb-4">Sign In</button>
+                            <p class="text-center pb-4">
+                                <a href="#" data-toggle="modal2" data-target="#exampleModalCenter"> Don't have an account?</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-</div>
+    <!--//Login-->
+    <!--/Register-->
+    <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="login px-4 mx-auto mw-100">
+                        <h5 class="text-center mb-4">Register Now</h5>
+                        <form action="#" method="post">
+                            <div class="form-group">
+                                <label>First name</label>
+
+                                <input type="text" class="form-control" id="validationDefault01" placeholder="" required="">
+                            </div>
+                            <div class="form-group">
+                                <label>Last name</label>
+                                <input type="text" class="form-control" id="validationDefault02" placeholder="" required="">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="mb-2">Password</label>
+                                <input type="password" class="form-control" id="password1" placeholder="" required="">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirm Password</label>
+                                <input type="password" class="form-control" id="password2" placeholder="" required="">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary submit mb-4">Register</button>
+                            <p class="text-center pb-4">
+                                <a href="#">By clicking Register, I agree to your terms</a>
+                            </p>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--//Register-->
+    <!--//model-form-->
+
+	<!-- video Modal Popup -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Introduction Video</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body video">
+					<iframe src=""></iframe>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //video Model Popup -->
+
+	<!-- Vertically centered Modal -->
+	<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text-capitalize text-center" id="exampleModalLongTitle"><i class="fab fa-cloudversify"></i> Flex Art</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			<div class="modal-body">
+				<img src="images/bg.jpg" class="img-fluid mb-3" alt="Modal Image" />
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	  </div>
+	</div>
+	<!-- //Vertically centered Modal -->
+
+<!-- js -->
+<script src="js/library/jquery-2.1.4.min.js"></script>
+
+
+<script src="js/library/bootstrap.js"></script> <!-- Necessary-JavaScript-Entity-For-Bootstrap -->
+<!-- search overlay -->
+<script src="js/library/modernizr-2.6.2.min.js"></script>
+<!-- //search overlay -->
+
+<!--search jQuery-->
+<script src="js/library/classie-search.js"></script>
+<script src="js/library/demo1-search.js"></script>
+<!--//search jQuery-->
+
+<!-- dropdown nav -->
+<script>
+    $(document).ready(function() {
+        $(".dropdown").hover(
+            function() {
+                $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                $(this).toggleClass('open');
+            },
+            function() {
+                $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                $(this).toggleClass('open');
+            }
+        );
+    });
+</script>
+
+<!-- start-smoth-scrolling -->
+<script src="js/library/move-top.js"></script>
+<script src="js/library/easing.js"></script>
+<script src="js/library/minimal-slider.js"></script>
+<script src="js/library/waypoints.min.js"></script>
+<script src="js/library/counterup.min.js"></script>
+
+<script src="js/library/angular.js"></script>
+<script src="js/library/angular/ng-file-upload-shim.min.js"></script>
+<script src="js/library/angular/ng-file-upload.min.js"></script>
+<script type="text/javascript" src="js/library/angular/angular-ui-router.min.js"></script>
+<script type="text/javascript" src="js/library/angular/ng-img-crop.js"></script>
+<script type="text/javascript" src="js/library/jquery.Jcrop.js"></script>
+<script type="text/javascript" src="js/library/hidpi-canvas.min.js"></script>
+<script src="js/app.js"></script>
+
+<!-- here stars scrolling icon -->
+<script>
+    $(document).ready(function() {
+        /*
+            var defaults = {
+            containerID: 'toTop', // fading element id
+            containerHoverID: 'toTopHover', // fading element hover id
+            scrollSpeed: 1200,
+            easingType: 'linear'
+            };
+        */
+        $().UItoTop({ easingType: 'easeOutQuart' });
+
+    });
+
+</script>
 </body>
 </html>

@@ -63,8 +63,12 @@ public class AuthorizeController {
             response.put("redirect_url", changeCharset(AuthorizeConsts.redirect_url, "utf-8"));
             response.put("auth_type", "1");
             result=response.toJSONString();
+
         }catch (Exception e){
             LOG.error("AuthUrl 转换失败",e);
+            JSONObject error = new JSONObject();
+            error.put("errorcode","503");
+            return error.toJSONString();
         }
         return result;
 

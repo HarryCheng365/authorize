@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.exceptions.JedisAskDataException;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import java.util.List;
@@ -119,7 +120,7 @@ public class RedisService implements ExpireKey {
 		return delete(key) > 0;
 	}
 
-	public String get(String key){
+	public String get(String key)throws Exception{
 		String result =null;
 		Jedis jedis =null;
 		try{
@@ -127,6 +128,7 @@ public class RedisService implements ExpireKey {
 			result= jedis.get(key);
 		}catch (Exception e){
 			logger.error("",e);
+			throw new Exception("redis 获取数据失败!");
 		}finally {
 			if(jedis != null){
 				jedis.close();

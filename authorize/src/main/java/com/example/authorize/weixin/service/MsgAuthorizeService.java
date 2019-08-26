@@ -68,13 +68,13 @@ public class MsgAuthorizeService {
         }
     }
 
-    public String getComponentAccessToken(){
+    public String getComponentAccessToken()throws Exception{
 
         return redisService.get(AuthorizeConsts.appId + AuthorizeConsts.componentAccessToken);
     }
 
 
-    public String getPreAuthCode(String appId){
+    public String getPreAuthCode(String appId)throws Exception{
         String result=null;
         try {
             if(redisService.exists(appId+AuthorizeConsts.preAuthCode)){
@@ -96,6 +96,7 @@ public class MsgAuthorizeService {
 
         }catch (Exception e){
             logger.error("PRE_AUTH_CODE 获取失败",e);
+            throw new Exception("PRE_AUTH_CODE 获取失败",e);
         }
         return result;
 

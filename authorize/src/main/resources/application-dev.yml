@@ -20,7 +20,7 @@ spring:
     driver-class-name:
       com.mysql.jdbc.Driver
     url:
-      jdbc:mysql://localhost:3306/db_person?characterEncoding=utf-8
+      jdbc:mysql://localhost:3306/authorize?characterEncoding=utf-8
     username:
       root
     password:
