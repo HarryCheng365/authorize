@@ -15,4 +15,6 @@ public interface WeChatUserAccountInfoDao {
     String getAccountInfoById(@Param("authorizerAppId") String authorizerAppId);
 
 
+
+
 }

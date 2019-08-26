@@ -178,7 +178,7 @@ public class TokenManager {
 			}
 		},initialDelay == 0 ? delay : initialDelay,delay,TimeUnit.SECONDS);
 		futureMap.put(appid+AuthorizeConsts.preAuthCode, scheduledFuture);
-		logger.info("PRE_AUTH_CODE appid:{}",appid);
+		logger.info("PRE_AUTH_CODE task start appid:{}",appid);
 
 	}
 
@@ -190,6 +190,7 @@ public class TokenManager {
 				PreAuthCode preAuthCode = ComponentAPI.getApiPreauthcode(componentAccessToken, appid);
 				if(preAuthCode.isSuccess()){
 					redisService.set(appid+AuthorizeConsts.preAuthCode,preAuthCode.getPreAuthCode(),570);
+					logger.info("PRE_AUTH_CODE refurbish with appid:{} and preAuthCode:{}",appid,preAuthCode.getPreAuthCode());
 					break;
 				}
 				else{
@@ -197,7 +198,6 @@ public class TokenManager {
 					Thread.sleep(10000);
 				}
 			}
-			logger.info("PRE_AUTH_CODE refurbish with appid:{}",appid);
 		}catch (Exception e){
 			logger.error("PRE_AUTH_CODE refurbish error with appid:{}",appid);
 			logger.error("", e);
@@ -224,7 +224,7 @@ public class TokenManager {
 			}
 		},initialDelay == 0 ? delay : initialDelay,delay,TimeUnit.SECONDS);
 		futureMap.put(componentAppid+AuthorizeConsts.componentAccessToken, scheduledFuture);
-		logger.info("COMPONENT_ACCESS_TOKEN appid:{}",componentAppid);
+		logger.info("COMPONENT_ACCESS_TOKEN task start appid:{}",componentAppid);
 
 	}
 
@@ -236,13 +236,13 @@ public class TokenManager {
 					ComponentAccessTokenMsg componentAccessTokenMsg =new ComponentAccessTokenMsg(AuthorizeConsts.appId,componentAccessToken.getComponentAccessToken(),componentAccessToken.getExpiresIn());
 					weChatComponentAccessTokenDao.insertRecord(componentAccessTokenMsg);
 					redisService.set(appid + AuthorizeConsts.componentAccessToken, componentAccessToken.getComponentAccessToken(), 118 * 60);
+					logger.info("COMPONENT_ACCESS_TOKEN refurbish with appid:{} and componentAccessToken:{}",appid,componentAccessToken.getComponentAccessToken());
 					break;
 				}else{
 					logger.error("COMPONENT_ACCESS_TOKEN HttpRequest ERROR with appid:{}",appid);
 					Thread.sleep(1000);
 				}
 			}
-			logger.info("COMPONENT_ACCESS_TOKEN refurbish with appid:{}",appid);
 
 
 		}catch (Exception e){

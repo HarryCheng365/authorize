@@ -130,6 +130,7 @@ public class ComponentAPI extends BaseAPI{
     }
 
 
+
     /**
      * 获取授权方的账户信息
      *
@@ -196,7 +197,10 @@ public class ComponentAPI extends BaseAPI{
         return LocalHttpClient.executeJsonResult(httpUriRequest, BaseResult.class);
     }
 
-    
+    public static BaseResult authorizeSuccess(String componentAppid,String authorizer_id,String tid ){
+
+    }
+
 
 
     /**

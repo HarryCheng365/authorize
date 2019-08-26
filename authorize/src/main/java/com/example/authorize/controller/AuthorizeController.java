@@ -96,8 +96,11 @@ public class AuthorizeController {
     @RequestMapping(value="/finish/{tid}",method = RequestMethod.POST)
     public void getAuthCode(@PathVariable("tid")String tid, @RequestParam("auth_code") String auth_code,@RequestParam("expires_in") int expires_in){
 
-
-        msgAuthorizeService.saveUserAccessToken(tid,auth_code,expires_in);
+        try {
+            msgAuthorizeService.saveUserAccessToken(tid, auth_code, expires_in);
+        }catch (Exception e){
+            LOG.error("根据auth_code 获取 access_token发生错误: ",e);
+        }
 
     }
 

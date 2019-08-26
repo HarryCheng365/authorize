@@ -152,6 +152,7 @@ public class MsgAuthorizeService {
                     authorizationInfo.getFunc_info().toString());
             weChatUserAccountInfoDao.insertRecord(authorizeAccountInfoMsg);
 
+
         }catch (Exception e){
             logger.error("AUTHORIZER_ACCOUNT_INFO error",e);
         }

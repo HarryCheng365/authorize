@@ -17,7 +17,7 @@ create table if NOT EXISTS `wechat_authorizer_msg` (
 create table if NOT EXISTS `wechat_component_access_tokens` (
   `id` int(11) NOT NULL auto_increment comment '自增id',
   `componentAppId` varchar(32) NOT NULL comment '第三方平台appId',
-  `componentAccessToken` varchar(128) default null,
+  `componentAccessToken` varchar(256) default null,
   `expiresIn` int(11) default 0,
   `createTime` bigint(20) default 0,
   PRIMARY KEY (`id`)
@@ -26,7 +26,7 @@ create table if NOT EXISTS `wechat_component_access_tokens` (
 
 create table if NOT EXISTS `wechat_user_access_tokens`(
   `authorizerAppId` varchar(64) NOT NULL comment '公众号或小程序的appId',
-  `authorizerAccessToken` varchar(128) default null comment
+  `authorizerAccessToken` varchar(256) default null comment
   '授权方接口调用凭据（在授权的公众号或小程序具备api权限时，才有此返回值），也简称为令牌',
   `authorizerRefreshToken` varchar(64) default null comment
   '接口调用凭据刷新令牌',
@@ -38,6 +38,7 @@ create table if NOT EXISTS `wechat_user_access_tokens`(
 
 create table if NOT EXISTS `wechat_user_account_info` (
   `authorizerAppId` varchar (64) NOT NULL comment '授权方公众号appId',
+  `tid` varchar (64) NOT NULL  comment '网易号',
   `user_name` varchar(64) default null comment '授权方公众号的原始ID',
   `nick_name` varchar(64) default null comment '授权方昵称 微信SDK Demo Special',
   `principal_name` varchar(64) default null comment '公众号的主体名称',
