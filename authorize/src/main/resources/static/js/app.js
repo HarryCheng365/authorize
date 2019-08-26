@@ -19,13 +19,6 @@
                 }
             }
 
-        }).state('about',{
-            url:'/about',
-            views:{
-                '':{
-                    templateUrl:'page/about.html'
-                }
-            }
         }).state('error',{
             url:'/error',
             views:{

@@ -3,6 +3,7 @@ package com.example.authorize.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.authorize.weixin.aes.WXBizMsgCrypt;
+import com.example.authorize.weixin.api.ComponentAPI;
 import com.example.authorize.weixin.consts.AuthorizeConsts;
 import com.example.authorize.weixin.entity.AuthorizeMsg;
 import com.example.authorize.weixin.service.MsgAuthorizeService;
@@ -42,6 +43,24 @@ public class AuthorizeController {
             IOUtils.sendOutputStr(result,httpServletResponse);
         }catch (Exception e){
             LOG.error("HttpServletRequest 解析失败"+e.getMessage());
+        }
+
+    }
+
+    @RequestMapping(value="/authorizeUrl",method = RequestMethod.POST)
+    public String getAuthorizeUrl(@RequestParam("methodType") String methodType){
+        try {
+            if (methodType.equals("QR_CODE")) {
+                return ComponentAPI.getAuthUrlScan(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),AuthorizeConsts.redirect_url,"1" );
+
+            } else {
+                return ComponentAPI.getAuthUrl(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),AuthorizeConsts.redirect_url,"1" );
+            }
+        }catch (Exception e){
+            LOG.error("AuthUrl 生成失败",e);
+            JSONObject error = new JSONObject();
+            error.put("errorcode","503");
+            return error.toJSONString();
         }
 
     }

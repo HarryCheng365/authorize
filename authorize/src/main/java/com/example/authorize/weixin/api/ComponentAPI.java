@@ -90,6 +90,22 @@ public class ComponentAPI extends BaseAPI{
         }
     }
 
+    public static String getAuthUrlScan(String component_appid,String pre_auth_code,String redirect_uri,String auth_type){
+        try {
+            StringBuilder sb = new StringBuilder();
+            sb.append(MP_URI + "cgi-bin/componentloginpage?")
+                    .append("&component_appid=").append(component_appid)
+                    .append("&pre_auth_code=").append(pre_auth_code)
+                    .append("&redirect_url=").append(URLEncoder.encode(redirect_uri, "utf-8"))
+                    .append("&auth_type=").append(auth_type);
+            return sb.toString();
+        }catch(UnsupportedEncodingException e){
+            logger.error("",e);
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
 
     /**
