@@ -65,26 +65,16 @@
         $scope.auth_type = "auth_type";
         $scope.realUrl="";
         $scope.errorMessage="";
-        $scope.getUrl = function ( flag) {
+        $scope.getUrl = function(flag) {
             $http({
-                method: 'GET',
-                url: '/authorize/componentAppId'
+                method: 'POST',
+                url: '/authorize/authorizeUrl' ,
+                data: {methodType: ""+flag,tid:"1"},
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             }).then(function successCallback(response) {
                 $scope.errorMessage=response.data.errorcode;
-                var componentAppid = response.data.component_appid;
-                var preAuthCode = response.data.pre_auth_code;
-                var redirectUrl = response.data.redirect_url;
-                var authType = response.data.auth_type;
-                var realUrl;
-                if(flag===true) {
-                    realUrl = $scope.baseUrl + $scope.component_appid + "=" + componentAppid + "&" +
-                        $scope.pre_auth_code + "=" + preAuthCode + "&" + $scope.redirect_url + "=" + redirectUrl + "&" +
-                        $scope.auth_type + "=" + authType;
-                }else{
-                    realUrl=$scope.mobileBaseUrl + "action=bindcomponent" + "&" + $scope.auth_type + "=" + authType + "&no_scan=1" + "&" +
-                        $scope.component_appid + "=" + componentAppid + "&" + $scope.pre_auth_code + "=" + preAuthCode + "&" + $scope.redirect_url + "=" + redirectUrl;
-                }
-
+                console.log(data);
+                var realUrl = response.data;
                 if($scope.errorMessage!=null&&$scope.errorMessage!==""&&$scope.errorMessage!==undefined)
                     $scope.goErrorPage();
                 else{
@@ -97,7 +87,7 @@
             });
         };
         $scope.goAuthorize = function () {
-            $scope.getUrl(true);
+            $scope.getUrl("QR_CODE");
         };
 
         $scope.goErrorPage =function(){

@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
+/**
+ * @author Haoyu
+ * @date 2019/8/27
+ */
 @Component
 public class MaterialTask {
     private Logger logger = LoggerFactory.getLogger(MaterialTask.class);
