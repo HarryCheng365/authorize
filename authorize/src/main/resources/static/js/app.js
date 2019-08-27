@@ -69,7 +69,7 @@
             $http({
                 method: 'POST',
                 url: '/authorize/authorizeUrl' ,
-                data: {methodType: 'QR_CODE',tid:'1'},
+                data: {methodType: 'other',tid:'1'},
                 //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
             }).then(function successCallback(response) {
                 $scope.errorMessage=response.data.errorcode;
