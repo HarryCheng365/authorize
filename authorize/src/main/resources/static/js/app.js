@@ -73,7 +73,7 @@
                 //headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
             }).then(function successCallback(response) {
                 $scope.errorMessage=response.data.errorcode;
-                console.log(data);
+                console.log(response.data);
                 var realUrl = response.data.url;
                 if($scope.errorMessage!=null&&$scope.errorMessage!==""&&$scope.errorMessage!==undefined)
                     $scope.goErrorPage();

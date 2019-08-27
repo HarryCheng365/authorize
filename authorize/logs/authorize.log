@@ -146,3 +146,6 @@
 2019-08-27 11:44:53 [http-nio-8082-exec-10][RedisService][116][INFO ]- wxe123afcba60fb48aCOMPONENT_ACCESS_TOKEN
 2019-08-27 11:44:53 [http-nio-8082-exec-10][LocalHttpClient][244][INFO ]- URI[458ff3ed-fa08-4edf-bbeb-7e194deddcfc] https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode?component_access_token=24_K8ay8otM_8ArhB7-DTG1we6GitXEFJ93pZMHfNWlDlZMAN5qjioDhMP1_kUWWKFkSjMjp_fOAGhaVFDeiISpwKP2UDD1qjHwK93EVp8VKnFgXY2aMQuf73k6hPA15pgrCGiouaijEfxImXE1YLSiAEASFM Content-Type: text/plain; charset=UTF-8 ContentLength:40 Content:{"component_appid":"wxe123afcba60fb48a"}
 2019-08-27 11:44:54 [http-nio-8082-exec-10][JsonResponseHandler][38][INFO ]- URI[458ff3ed-fa08-4edf-bbeb-7e194deddcfc] elapsed time:91 ms RESPONSE DATA:{"errcode":61004,"errmsg":"access clientip is not registered hint: [YK_F_a04871961] requestIP: 220.181.102.176"}
+2019-08-27 11:55:21 [Thread-11][ThreadPoolTaskExecutor][208][INFO ]- Shutting down ExecutorService 'applicationTaskExecutor'
+2019-08-27 11:55:22 [Thread-11][HikariDataSource][350][INFO ]- HikariPool-1 - Shutdown initiated...
+2019-08-27 11:55:22 [Thread-11][HikariDataSource][352][INFO ]- HikariPool-1 - Shutdown completed.
