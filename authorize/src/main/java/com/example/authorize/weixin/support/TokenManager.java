@@ -46,8 +46,6 @@ public class TokenManager {
 	@Autowired
 	RedisService redisService;
 
-
-
 	/**
 	 * 初始化 scheduledExecutorService
 	 */
@@ -82,36 +80,14 @@ public class TokenManager {
 	}
 	public void initAll(){
 		try {
-			redisService.set("123","321",6000);
-			logger.info("redis 测试"+redisService.get("123"));
-		}catch (Exception e){
-			logger.error("",e);
-
-		}
-		String component_verify_ticket=null;
-		try {
-			for(int i=0;i<12;i++) {
-				component_verify_ticket = weChatMsgAuthorizeDao.getLastestComponentVerifyTickets(AuthorizeConsts.appId);
-				if (component_verify_ticket == null) {
-					Thread.sleep(60000);
-				}else{
-					break;
-				}
-			}
-		}catch (Exception e){
-			logger.error("COMPONENT_VERIFY_TICKET is not exist in the database",e);
-		}
-
-
-		try {
-			initComponentAccessToken(AuthorizeConsts.appId, AuthorizeConsts.appSecret, component_verify_ticket);
+			initComponentAccessToken(AuthorizeConsts.appId, AuthorizeConsts.appSecret);
 			initPreAuthCode(AuthorizeConsts.appId);
 		}catch (Exception e){
 			logger.error("COMPONENT_ACCESS_TOKEN bad initialization",e);
 		}
 	}
-	public void initComponentAccessToken(String componentAppid, String componentSecret,String component_verify_ticket){
-		initComponentAccessToken(componentAppid,componentSecret,component_verify_ticket,0,118*60);
+	public void initComponentAccessToken(String componentAppid, String componentSecret){
+		initComponentAccessToken(componentAppid,componentSecret,0,118*60);
 
 	}
 	public void initPreAuthCode(String appid){
@@ -213,7 +189,7 @@ public class TokenManager {
 
 	}
 
-	private  void initComponentAccessToken(final String componentAppid, String componentSecret,String component_verify_ticket,int initialDelay,int delay) {
+	private  void initComponentAccessToken(final String componentAppid, String componentSecret,int initialDelay,int delay) {
 
 		if(scheduledExecutorService == null){
 			initScheduledExecutorService();
@@ -223,12 +199,12 @@ public class TokenManager {
 			futureMap.get(componentAppid+AuthorizeConsts.componentAccessToken).cancel(true);
 		}
 		if(initialDelay == 0){
-			refreshComponentAccessToken(componentAppid,componentSecret,component_verify_ticket);
+			refreshComponentAccessToken(componentAppid,componentSecret);
 		}
 		ScheduledFuture<?> scheduledFuture =  scheduledExecutorService.scheduleWithFixedDelay(new Runnable() {
 			@Override
 			public void run() {
-				refreshComponentAccessToken(componentAppid,componentSecret,component_verify_ticket);
+				refreshComponentAccessToken(componentAppid,componentSecret);
 			}
 		},initialDelay == 0 ? delay : initialDelay,delay,TimeUnit.SECONDS);
 		futureMap.put(componentAppid+AuthorizeConsts.componentAccessToken, scheduledFuture);
@@ -236,8 +212,18 @@ public class TokenManager {
 
 	}
 
-	private  void refreshComponentAccessToken(String appid,String secret,String component_verify_ticket){
+	private  void refreshComponentAccessToken(String appid,String secret){
 		try{
+
+			String component_verify_ticket=null;
+			for(int i=0;i<12;i++) {
+				component_verify_ticket = weChatMsgAuthorizeDao.getLastestComponentVerifyTickets(AuthorizeConsts.appId);
+				if (component_verify_ticket == null) {
+					Thread.sleep(60000);
+				}else{
+					break;
+				}
+			}
 			for(int i=0;i<10;i++) {
 				ComponentAccessToken componentAccessToken = ComponentAPI.getApiComponentToken(appid, secret, component_verify_ticket);
 				if (componentAccessToken.isSuccess()) {

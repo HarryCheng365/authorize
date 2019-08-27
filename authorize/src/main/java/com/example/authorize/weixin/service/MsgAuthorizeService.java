@@ -167,37 +167,7 @@ public class MsgAuthorizeService {
     }
 
 
-    /**
-     * 根据authorizer_appid去取相应的access_token token采用lazy的方式 不会自动刷新，如果发现redis缓存里没有，那么就去数据库中取出
-     * refreshToken 进行刷新
-     * @param authorizer_appid
-     * @return
-     */
 
-    public String getUserAccessToken(String authorizer_appid){
-        String userAccessToken=null;
-        try {
-             userAccessToken= redisService.get(AuthorizeConsts.appId + authorizer_appid + AuthorizeConsts.userAccessToken);
-            String componentAccessToken = redisService.get(AuthorizeConsts.appId + AuthorizeConsts.componentAccessToken);
-            if (userAccessToken == null) {
-                AuthorizeAccessTokenMsg authorizeAccessTokenMsg = weChatUserAccessTokenDao.getAuthorizeTokenMsg(authorizer_appid);
-                String refreshToken = authorizeAccessTokenMsg.getAuthorizerRefreshToken();
-                for (int i = 0; i < 10; i++) {
-                    AuthorizerAccessToken authorizerAccessToken = ComponentAPI.api_authorizer_token(componentAccessToken, AuthorizeConsts.appId, authorizer_appid, refreshToken);
-                    if (authorizerAccessToken.isSuccess()) {
-                        authorizeAccessTokenMsg.setAuthorizerAccessToken(authorizerAccessToken.getAuthorizerAccessToken());
-                        authorizeAccessTokenMsg.setAuthorizerRefreshToken(authorizerAccessToken.getAuthorizerRefreshToken());
-                        weChatUserAccessTokenDao.updateRecord(authorizeAccessTokenMsg);
-                        redisService.set(AuthorizeConsts.appId + authorizer_appid + AuthorizeConsts.userAccessToken,authorizerAccessToken.getAuthorizerAccessToken(),118*60);
-                        userAccessToken=authorizerAccessToken.getAuthorizerAccessToken();
-                        break;
-                    }
-                }
-            }
-        }catch (Exception e){
-            logger.error("USER_ACCESS_TOKEN error",e);
-        }
-        return userAccessToken;
 
-    }
+
 }

@@ -97,7 +97,7 @@
             });
         };
         $scope.goAuthorize = function () {
-            $scope.getUrl(false);
+            $scope.getUrl(true);
         };
 
         $scope.goErrorPage =function(){

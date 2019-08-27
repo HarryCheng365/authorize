@@ -2,7 +2,6 @@ package com.example.authorize.weixin.entity.material;
 
 /**
  * 新增永久视频素材需特别注意
- * @author LiYi
  *
  */
 public class Description {

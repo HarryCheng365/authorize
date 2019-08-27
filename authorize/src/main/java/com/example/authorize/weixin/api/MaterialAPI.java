@@ -187,6 +187,7 @@ public class MaterialAPI extends BaseAPI{
 	}
 
 
+
 	/**
 	 * 删除永久素材
 	 * @param access_token access_token
