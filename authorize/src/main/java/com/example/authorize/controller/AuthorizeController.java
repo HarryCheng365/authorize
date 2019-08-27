@@ -1,6 +1,7 @@
 package com.example.authorize.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.authorize.weixin.api.ComponentAPI;
 import com.example.authorize.weixin.consts.AuthorizeConsts;
@@ -44,13 +45,16 @@ public class AuthorizeController {
     }
 
     @RequestMapping(value="/authorizeUrl",method = RequestMethod.POST)
-    public String getAuthorizeUrl(@RequestParam("methodType") String methodType,@RequestParam("tid") String tid){
+    public String getAuthorizeUrl(@RequestBody String json){
+        JSONObject result =new JSONObject();
         try {
-            if (methodType.equals("QR_CODE")) {
-                return ComponentAPI.getAuthUrlScan(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),genRedirectUrl(AuthorizeConsts.redirect_url,tid),"3" );
+            JSONObject jsonObject= JSON.parseObject(json);
+            String tid=jsonObject.getString("tid");
+            if (jsonObject.getString("methodType").equals("QR_CODE")) {
+                result.put("url",ComponentAPI.getAuthUrlScan(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),genRedirectUrl(AuthorizeConsts.redirect_url,tid),"3" ));
 
             } else {
-                return ComponentAPI.getAuthUrl(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),genRedirectUrl(AuthorizeConsts.redirect_url,tid),"3" );
+                result.put("url", ComponentAPI.getAuthUrl(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),genRedirectUrl(AuthorizeConsts.redirect_url,tid),"3" ));
             }
         }catch (Exception e){
             LOG.error("AuthUrl 生成失败",e);
@@ -58,6 +62,7 @@ public class AuthorizeController {
             error.put("errorcode","503");
             return error.toJSONString();
         }
+        return result.toJSONString();
 
     }
 
