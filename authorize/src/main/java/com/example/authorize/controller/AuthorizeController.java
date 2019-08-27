@@ -95,7 +95,7 @@ public class AuthorizeController {
 
     }
 
-    @RequestMapping(value="/finish/{tid}",method = RequestMethod.POST)
+    @RequestMapping(value="/finish/{tid}",method = RequestMethod.GET)
     public void getAuthCode(@PathVariable("tid")String tid, @RequestParam("auth_code") String auth_code,@RequestParam("expires_in") int expires_in){
 
         try {
