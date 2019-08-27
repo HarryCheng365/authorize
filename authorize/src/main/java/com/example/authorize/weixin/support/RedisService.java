@@ -109,7 +109,7 @@ public class RedisService implements ExpireKey {
 		return delete(key) > 0;
 	}
 
-	public String get(String key)throws Exception{
+	public String get(String key){
 		String result =null;
 		Jedis jedis =null;
 		try{
@@ -118,7 +118,6 @@ public class RedisService implements ExpireKey {
 			result= jedis.get(key);
 		}catch (Exception e){
 			logger.error("",e);
-			throw new Exception("redis 获取数据失败!");
 		}finally {
 			if(jedis != null){
 				jedis.close();
