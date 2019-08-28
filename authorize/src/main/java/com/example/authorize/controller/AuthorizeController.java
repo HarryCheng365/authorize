@@ -99,6 +99,7 @@ public class AuthorizeController {
     public ModelAndView getAuthCode(@PathVariable("tid")String tid, @RequestParam("auth_code") String auth_code,@RequestParam("expires_in") int expires_in){
 
         try {
+            LOG.info("{}获取到的授权码为{}",tid,auth_code);
             msgAuthorizeService.saveUserAccessToken(tid, auth_code, expires_in);
 
         }catch (Exception e){

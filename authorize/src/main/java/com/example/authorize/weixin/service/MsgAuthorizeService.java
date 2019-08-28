@@ -111,6 +111,8 @@ public class MsgAuthorizeService {
                 apiQueryAuthResult = ComponentAPI.api_query_auth(componentAccessToken, AuthorizeConsts.appId,auth_code);
                 if(apiQueryAuthResult.isSuccess()) {
                     break;
+                }else{
+                    logger.info("AUTH_ACCESS_TOKEN http 请求失败");
                 }
             }
             ApiQueryAuthResult.Authorization_info authorization_info = apiQueryAuthResult.getAuthorization_info();
@@ -137,6 +139,7 @@ public class MsgAuthorizeService {
 
     public void saveUserAccountInfo(String authorizer_appid,String tid){
         try {
+            logger.info("USER_ACCOUNT_INFO 开始拉取用户信息");
             String componentAccessToken = redisService.get(AuthorizeConsts.appId + AuthorizeConsts.componentAccessToken);
             ApiGetAuthorizerInfoResult apiGetAuthorizerInfoResult = null;
             for (int i = 0; i < 10; i++) {

@@ -58,6 +58,7 @@ public class MaterialTask {
 
 
     public void initMaterialTask(){
+
         initMaterialTask(0,60*60);
     }
 

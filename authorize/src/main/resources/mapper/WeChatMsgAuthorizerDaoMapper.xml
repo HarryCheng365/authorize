@@ -45,14 +45,14 @@
     <update id="updateRecord">
         update wechat_authorizer_msg set
         <trim suffix="" suffixOverrides=",">
-            <if test="appId!= null">#{appId},</if>
-            <if test="createTime != null">#{createTime},</if>
-            <if test="infoType != null">#{infoType},</if>
-            <if test="authorizerAppId != null">#{authorizerAppId},</if>
-            <if test="authorizationCode!= null">#{authorizationCode},</if>
-            <if test="componentVerifyTicket != null">#{componentVerifyTicket},</if>
-            <if test="authorizationCodeExpiredTime != null">#{authorizationCodeExpiredTime},</if>
-            <if test="preAuthCode!= null">#{preAuthCode},</if>
+            <if test="appId!= null">appId=#{appId},</if>
+            <if test="createTime != null">createTime=#{createTime},</if>
+            <if test="infoType != null">infoType=#{infoType},</if>
+            <if test="authorizerAppId != null">authorizerAppId=#{authorizerAppId},</if>
+            <if test="authorizationCode!= null">authorizationCode=#{authorizationCode},</if>
+            <if test="componentVerifyTicket != null">componentVerifyTicket=#{componentVerifyTicket},</if>
+            <if test="authorizationCodeExpiredTime != null">authorizationCodeExpiredTime=#{authorizationCodeExpiredTime},</if>
+            <if test="preAuthCode!= null">preAuthCode=#{preAuthCode},</if>
         </trim>
         where id=#{id}
     </update>

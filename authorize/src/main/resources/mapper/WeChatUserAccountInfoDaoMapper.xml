@@ -7,6 +7,7 @@
         <result column="tid" property="tid"/>
         <result column="user_name" property="user_name"/>
         <result column="nick_name" property="nick_name"/>
+        <result column="head_img" property="head_img"/>
         <result column="principal_name" property="principal_name"/>
         <result column="service_type_info" property="service_type_info"/>
         <result column="verify_type_info" property="verify_type_info"/>
@@ -22,6 +23,7 @@
             <if test="tid!=null">tid,</if>
             <if test="user_name!= null">user_name,</if>
             <if test="nick_name != null">nick_name,</if>
+            <if test="head_img!=null">head_img,</if>
             <if test="principal_name != null">principal_name,</if>
             <if test="service_type_info != null">service_type_info,</if>
             <if test="verify_type_info !=null">verify_type_info,</if>
@@ -38,6 +40,7 @@
             <if test="tid!=null">#{tid},</if>
             <if test="user_name!= null">#{user_name},</if>
             <if test="nick_name != null">#{nick_name},</if>
+            <if test="head_img!=null">#{head_img},</if>
             <if test="principal_name != null">#{principal_name},</if>
             <if test="service_type_info != null">#{service_type_info},</if>
             <if test="verify_type_info !=null">#{verify_type_info},</if>
@@ -49,17 +52,18 @@
     </sql>
 
     <update id="updateRecord">
-        update wechat_user_access_tokens set
+        update wechat_user_account_info set
         <trim suffix="" suffixOverrides=",">
-            <if test="user_name!= null">#{user_name},</if>
-            <if test="nick_name != null">#{nick_name},</if>
-            <if test="principal_name != null">#{principal_name},</if>
-            <if test="service_type_info != null">#{service_type_info},</if>
-            <if test="verify_type_info !=null">#{verify_type_info},</if>
-            <if test ="alias != null">#{alias},</if>
-            <if test ="business_info !=null">#{business_info},</if>
-            <if test ="qrcode_url!=null">#{qrcode_url},</if>
-            <if test ="func_info!=null">#{func_info},</if>
+            <if test="user_name != null">user_name=#{user_name},</if>
+            <if test="nick_name != null">nick_name=#{nick_name},</if>
+            <if test="head_img !=null ">head_img=#{head_img},</if>
+            <if test="principal_name != null">principal_name=#{principal_name},</if>
+            <if test="service_type_info != null">service_type_info=#{service_type_info},</if>
+            <if test="verify_type_info !=null">verify_type_info=#{verify_type_info},</if>
+            <if test ="alias != null">alias=#{alias},</if>
+            <if test ="business_info !=null">business_info=#{business_info},</if>
+            <if test ="qrcode_url!=null">qrcode_url=#{qrcode_url},</if>
+            <if test ="func_info!=null">func_info=#{func_info},</if>
         </trim>
         where authorizerAppId=#{authorizerAppId}
     </update>

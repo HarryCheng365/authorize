@@ -33,10 +33,10 @@
     <update id="updateRecord">
         update wechat_user_access_tokens set
         <trim suffix="" suffixOverrides=",">
-            <if test="authorizerRefreshToken != null">#{authorizerRefreshToken},</if>
-            <if test="createTime != null">#{createTime},</if>
-            <if test="expiresIn != null">#{expiresIn},</if>
-            <if test="authorizerAccessToken!= null">#{authorizerAccessToken},</if>
+            <if test="authorizerRefreshToken != null">authorizerRefreshToken=#{authorizerRefreshToken},</if>
+            <if test="createTime != null">createTime=#{createTime},</if>
+            <if test="expiresIn != null">expiresIn=#{expiresIn},</if>
+            <if test="authorizerAccessToken!= null">authorizerAccessToken=#{authorizerAccessToken},</if>
         </trim>
         where authorizerAppId=#{authorizerAppId}
     </update>

@@ -30,10 +30,10 @@
     <update id="updateRecord">
         update wechat_component_access_tokens set
         <trim suffix="" suffixOverrides=",">
-            <if test="componentAppId!= null">#{componentAppId},</if>
-            <if test="createTime != null">#{createTime},</if>
-            <if test="expiresIn != null">#{expiresIn},</if>
-            <if test="componentAccessToken!= null">#{componentAccessToken},</if>
+            <if test="componentAppId!= null">componentAppId=#{componentAppId},</if>
+            <if test="createTime != null">createTime=#{createTime},</if>
+            <if test="expiresIn != null">expiresIn=#{expiresIn},</if>
+            <if test="componentAccessToken!= null">componentAccessToken=#{componentAccessToken},</if>
         </trim>
         where id=#{id}
     </update>

@@ -32,14 +32,14 @@ public class SignatureUtil {
 	public SignatureUtil(){
 		//初始化公钥
 		try {
-			X509EncodedKeySpec bobPubKeySpec = new X509EncodedKeySpec(decryptBASE64(readKey("config/rsa_public_key.pem")));
+			X509EncodedKeySpec bobPubKeySpec = new X509EncodedKeySpec(decryptBASE64(readKey("rsa_public_key.pem")));
 			KeyFactory keyFactory = KeyFactory.getInstance(SignatureUtil.KEY_ALGORITHM);
 			pubKey = keyFactory.generatePublic(bobPubKeySpec);
 			pubcipher = Cipher.getInstance(KEY_ALGORITHM); 
 			pubcipher.init(Cipher.ENCRYPT_MODE, pubKey);
 			
 			//初始化私钥
-			PKCS8EncodedKeySpec spec =new PKCS8EncodedKeySpec(decryptBASE64(readKey("config/pkcs8_private_key.pem"))); 
+			PKCS8EncodedKeySpec spec =new PKCS8EncodedKeySpec(decryptBASE64(readKey("pkcs8_private_key.pem")));
 			KeyFactory kf = KeyFactory.getInstance(KEY_ALGORITHM); 
 			priKey = kf.generatePrivate(spec);  
 			pricipher = Cipher.getInstance(KEY_ALGORITHM); 
