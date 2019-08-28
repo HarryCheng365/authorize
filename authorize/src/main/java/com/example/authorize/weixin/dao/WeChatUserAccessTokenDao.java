@@ -13,7 +13,7 @@ public interface WeChatUserAccessTokenDao {
     @Select("SELECT authorizerRefreshToken FROM wechat_user_access_tokens where authorizerAppId = #{authorizerAppId}")
     String getRefreshToken(@Param("authorizerAppId") String authorizerAppId);
 
-    @Select("SELECT * FROM wechat_user_access_tokens where authorizerAppId =#{authorizerAppId")
+    @Select("SELECT * FROM wechat_user_access_tokens where authorizerAppId =#{authorizerAppId}")
     AuthorizeAccessTokenMsg getAuthorizeTokenMsg(@Param("authorizerAppId") String authorizerAppId);
 
 
