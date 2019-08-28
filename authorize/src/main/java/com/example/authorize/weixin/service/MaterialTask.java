@@ -1,5 +1,6 @@
 package com.example.authorize.weixin.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.authorize.controller.MaterialController;
 import com.example.authorize.weixin.api.ComponentAPI;
@@ -9,11 +10,13 @@ import com.example.authorize.weixin.consts.MaterialConsts;
 import com.example.authorize.weixin.dao.WeChatUserAccessTokenDao;
 import com.example.authorize.weixin.dao.WeChatUserAccountInfoDao;
 import com.example.authorize.weixin.entity.AuthorizeAccessTokenMsg;
+import com.example.authorize.weixin.entity.AuthorizeAccountInfoMsg;
 import com.example.authorize.weixin.entity.AuthorizerAccessToken;
-import com.example.authorize.weixin.entity.material.MaterialBatchgetResult;
-import com.example.authorize.weixin.entity.material.MaterialBatchgetResultItem;
-import com.example.authorize.weixin.entity.material.MaterialcountResult;
+import com.example.authorize.weixin.entity.material.*;
+import com.example.authorize.weixin.entity.media.Article;
 import com.example.authorize.weixin.support.RedisService;
+import com.example.authorize.weixin.util.DateUtils;
+import com.example.authorize.weixin.util.SignatureUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,9 @@ public class MaterialTask {
 
     private  boolean daemon = Boolean.TRUE;
 
+    private SignatureUtil signatureUtil = new SignatureUtil();
+
+
     @Autowired
     WeChatUserAccountInfoDao weChatUserAccountInfoDao;
 
@@ -52,7 +58,7 @@ public class MaterialTask {
 
 
     public void initMaterialTask(){
-        initMaterialTask(0,1800);
+        initMaterialTask(0,60*60);
     }
 
     private void initMaterialTask(int initialDelay,int delay){
@@ -117,19 +123,32 @@ public class MaterialTask {
                         Thread.sleep(5000);
                     }
                 }
+                AuthorizeAccountInfoMsg authorizeAccountInfoMsg=weChatUserAccountInfoDao.getAccountInfoById(authorizer_appid);
+                DataRes dataRes = new DataRes(authorizeAccountInfoMsg.getAlias(),authorizeAccountInfoMsg.getUser_name());
+                dataRes.setSecretKey(genSignature());
+                ArrayList<PullData> pullDataLists = new ArrayList<>();
                 for(MaterialBatchgetResultItem resultItem:materialBatchgetResultItems){
-                    String media_id=resultItem.getMedia_id();
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("authorizer_appid",authorizer_appid);
-                    jsonObject.put("media_id",media_id);
-                    redisService.lpush(MaterialConsts.MATERIAL_QUEUE,jsonObject.toJSONString());
-                    logger.info("news 推送成功authorizer_appid:{},media_id:{}",authorizer_appid,media_id);
+                    getMaterialContentUrl(resultItem,pullDataLists);
                 }
+                dataRes.setList(pullDataLists);
+                String jsonstr= JSON.toJSONString(dataRes);
+                redisService.lpush(MaterialConsts.MATERIAL_QUEUE,jsonstr);
+                logger.info("news 推送成功authorizer_appid:{},total:{},index:{},totalPage:{}",authorizer_appid,newsCount,i,page);
             }
 
         }catch (Exception e){
             logger.error("FIND_MATERIAL_TASK failed",e);
 
+        }
+
+    }
+
+    private void getMaterialContentUrl(MaterialBatchgetResultItem resultItem,List<PullData> lists){
+        MaterialBatchgetResultItemContent itemContent=resultItem.getContent();
+        List<Article> articles=itemContent.getNews_item();
+        for(Article article:articles){
+            PullData pullData = new PullData(article.getThumb_media_id(),article.getTitle(),article.getUrl(),0L);
+            lists.add(pullData);
         }
 
     }
@@ -169,6 +188,16 @@ public class MaterialTask {
     }
 
 
+    private String genSignature(){
+        String signature="";
+        try{
+            signature=signatureUtil.signature(String.valueOf(System.currentTimeMillis())).replaceAll("\n", "").replaceAll("\r\n", "");
+        }catch (Exception e){
+            logger.error("SIGNATURE 生成失败",e);
+        }
+        return signature;
+
+    }
     private  void initScheduledExecutorService(){
         logger.info("daemon:{},poolSize:{}",daemon,poolSize);
         scheduledExecutorService =  Executors.newScheduledThreadPool(poolSize,new ThreadFactory() {

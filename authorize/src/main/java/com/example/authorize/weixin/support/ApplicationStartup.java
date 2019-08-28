@@ -1,6 +1,7 @@
 package com.example.authorize.weixin.support;
 
 import com.example.authorize.weixin.entity.Token;
+import com.example.authorize.weixin.service.MaterialTask;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.ContextStartedEvent;
@@ -29,6 +30,14 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
             }
         };
         configDaemonThread(threadPoolExecutor,runnable,"TokenManager").start();
+        MaterialTask task = contextRefreshedEvent.getApplicationContext().getBean(MaterialTask.class);
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                task.initMaterialTask();
+            }
+        };
+        configDaemonThread(threadPoolExecutor,runnable,"MaterialTask").start();
 
 
     }

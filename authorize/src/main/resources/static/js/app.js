@@ -26,6 +26,13 @@
                     templateUrl:'page/errorpage.html'
                 }
             }
+        }).state('finish',{
+            url:'/finish',
+            views:{
+                '':{
+                    templateUrl:'page/finish.html'
+                }
+            }
         });
 
     });

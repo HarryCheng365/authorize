@@ -4,6 +4,7 @@
 <mapper namespace="com.example.authorize.weixin.dao.WeChatUserAccountInfoDao">
     <resultMap id="userAccountInfoMsgRecordMap" type="com.example.authorize.weixin.entity.AuthorizeAccountInfoMsg">
         <result column="authorizerAppId" property="authorizerAppId"/>
+        <result column="tid" property="tid"/>
         <result column="user_name" property="user_name"/>
         <result column="nick_name" property="nick_name"/>
         <result column="principal_name" property="principal_name"/>
@@ -18,6 +19,7 @@
     <sql id="userAccountInfoMsgRecordColumn">
         <trim suffix="" suffixOverrides=",">
             <if test="authorizerAppId!= null">authorizerAppId,</if>
+            <if test="tid!=null">tid,</if>
             <if test="user_name!= null">user_name,</if>
             <if test="nick_name != null">nick_name,</if>
             <if test="principal_name != null">principal_name,</if>
@@ -33,6 +35,7 @@
     <sql id="userAccountInfoMsgRecordValue">
         <trim suffix="" suffixOverrides=",">
             <if test="authorizerAppId!= null">#{authorizerAppId},</if>
+            <if test="tid!=null">#{tid},</if>
             <if test="user_name!= null">#{user_name},</if>
             <if test="nick_name != null">#{nick_name},</if>
             <if test="principal_name != null">#{principal_name},</if>
