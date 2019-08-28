@@ -50,6 +50,7 @@ public class AuthorizeController {
         try {
             JSONObject jsonObject= JSON.parseObject(json);
             String tid=jsonObject.getString("tid");
+            tid=String.valueOf(System.currentTimeMillis()/AuthorizeConsts.ONE_SECOND);
             if (jsonObject.getString("methodType").equals("QR_CODE")) {
                 result.put("url",ComponentAPI.getAuthUrlScan(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),genRedirectUrl(AuthorizeConsts.redirect_url,tid),"3" ));
 

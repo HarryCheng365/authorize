@@ -7,10 +7,12 @@ import com.example.authorize.weixin.api.ComponentAPI;
 import com.example.authorize.weixin.api.MaterialAPI;
 import com.example.authorize.weixin.consts.AuthorizeConsts;
 import com.example.authorize.weixin.consts.MaterialConsts;
+import com.example.authorize.weixin.dao.WeChatMsgAuthorizeDao;
 import com.example.authorize.weixin.dao.WeChatUserAccessTokenDao;
 import com.example.authorize.weixin.dao.WeChatUserAccountInfoDao;
 import com.example.authorize.weixin.entity.AuthorizeAccessTokenMsg;
 import com.example.authorize.weixin.entity.AuthorizeAccountInfoMsg;
+import com.example.authorize.weixin.entity.AuthorizeMsg;
 import com.example.authorize.weixin.entity.AuthorizerAccessToken;
 import com.example.authorize.weixin.entity.material.*;
 import com.example.authorize.weixin.entity.media.Article;
@@ -51,17 +53,34 @@ public class MaterialTask {
     RedisService redisService;
 
     @Autowired
+    WeChatMsgAuthorizeDao weChatMsgAuthorizeDao;
+    @Autowired
     WeChatUserAccessTokenDao weChatUserAccessTokenDao;
 
     @Autowired
     MaterialService materialService;
 
+    @Autowired
+    MsgAuthorizeService msgAuthorizeService;
+
 
     public void initMaterialTask(){
 
+        testAuth_Code();
         initMaterialTask(0,60*60);
     }
 
+    public void testAuth_Code(){
+        try {
+            List<AuthorizeMsg>lists=weChatMsgAuthorizeDao.getAuthorizeMsgByInfoType("authorized",0,1);
+            logger.info("{}获取到的授权码为{}","",lists.get(0).getAuthorizationCode());
+            msgAuthorizeService.saveUserAccessToken("1",lists.get(0).getAuthorizationCode()
+                    , 6000);
+
+        }catch (Exception e){
+            logger.error("根据auth_code 获取 access_token发生错误: ",e);
+        }
+    }
     private void initMaterialTask(int initialDelay,int delay){
 
         if(scheduledExecutorService == null){
