@@ -1,7 +1,5 @@
 package com.example.authorize.weixin.aes;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Random;
@@ -11,10 +9,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.example.authorize.weixin.consts.AuthorizeConsts;
-import com.example.authorize.weixin.util.IOUtils;
 import org.apache.commons.codec.binary.Base64;
-
-import static org.apache.tomcat.util.http.fileupload.IOUtils.*;
 
 /**
  * 提供接收和推送给公众平台消息的加解密接口(UTF8编码的字符串).
@@ -62,7 +57,7 @@ public class WXBizMsgCrypt {
         static
         {
             try {
-                wxBizMsgCrypt=new WXBizMsgCrypt(AuthorizeConsts.msgChecktoken,AuthorizeConsts.encodingAesKey, AuthorizeConsts.appId);
+                wxBizMsgCrypt=new WXBizMsgCrypt(AuthorizeConsts.MSG_CHECK_TOKEN,AuthorizeConsts.ENCODING_AES_KEY, AuthorizeConsts.APP_ID);
             }catch (AesException e){
                 e.printStackTrace();
             }

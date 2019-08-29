@@ -12,7 +12,7 @@ public interface WeChatComponentAccessTokenDao {
     void updateRecord(ComponentAccessTokenMsg componentAccessTokenMsg);
 
 
-    @Select("SELECT componentAccessToken FROM wechat_component_access_tokens where componentAppId =#{componentAppId} order by createTime limit 1")
+    @Select("SELECT component_access_token FROM wechat_component_access_tokens where componentAppId =#{componentAppId} order by createTime limit 1")
     String getLatestComponentAccessToken(@Param("componentAppId") String componentAppId);
 
 }

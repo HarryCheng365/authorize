@@ -97,7 +97,7 @@ public class ComponentAPI extends BaseAPI{
             sb.append(MP_URI + "/cgi-bin/componentloginpage?")
                     .append("&component_appid=").append(component_appid)
                     .append("&pre_auth_code=").append(pre_auth_code)
-                    .append("&redirect_url=").append(URLEncoder.encode(redirect_uri, "utf-8"))
+                    .append("&REDIRECT_URL=").append(URLEncoder.encode(redirect_uri, "utf-8"))
                     .append("&auth_type=").append(auth_type);
             return sb.toString();
         }catch(UnsupportedEncodingException e){
@@ -200,7 +200,7 @@ public class ComponentAPI extends BaseAPI{
 
 
     /**
-     *
+     *把信息传回网易号，这里没有设置，所以整个流程是跑通了的
      * @param componentAppid
      * @param authorizer_appid
      * @param tid

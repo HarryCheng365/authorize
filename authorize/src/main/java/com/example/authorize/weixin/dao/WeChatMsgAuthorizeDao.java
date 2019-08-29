@@ -11,8 +11,8 @@ import java.util.List;
 public interface WeChatMsgAuthorizeDao {
     void insertRecord(AuthorizeMsg authorizeMsg);
     void updateRecord(AuthorizeMsg authorizeMsg);
-    @Select("SELECT componentVerifyTicket FROM wechat_authorizer_msg where infoType='component_verify_ticket' and appId=#{appId} order by createTime DESC limit 0,1 ")
-    String getLastestComponentVerifyTickets(@Param("appId") String appId);
+    @Select("SELECT componentVerifyTicket FROM wechat_authorizer_msg where infoType='component_verify_ticket' and app_id=#{app_id} order by createTime DESC limit 0,1 ")
+    String getLastestComponentVerifyTickets(@Param("APP_ID") String appId);
 
     @Select("SELECT * FROM wechat_authorizer_msg where infoType =#{infoType} limit #{curIndex} ,#{pageSize}")
     List<AuthorizeMsg> getAuthorizeMsgByInfoType(@Param("infoType") String infoType,@Param("curIndex") int index,@Param("pageSize") int pageSize);

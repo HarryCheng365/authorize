@@ -35,18 +35,18 @@ public class MaterialService {
     public String getUserAccessToken(String authorizer_appid){
         String userAccessToken=null;
         try {
-            userAccessToken= redisService.get(AuthorizeConsts.appId + authorizer_appid + AuthorizeConsts.userAccessToken);
-            String componentAccessToken = redisService.get(AuthorizeConsts.appId + AuthorizeConsts.componentAccessToken);
+            userAccessToken= redisService.get(AuthorizeConsts.APP_ID + authorizer_appid + AuthorizeConsts.USER_ACCESS_TOKEN);
+            String componentAccessToken = redisService.get(AuthorizeConsts.APP_ID + AuthorizeConsts.COMPONENT_ACCESS_TOKEN);
             if (userAccessToken == null) {
                 AuthorizeAccessTokenMsg authorizeAccessTokenMsg = weChatUserAccessTokenDao.getAuthorizeTokenMsg(authorizer_appid);
                 String refreshToken = authorizeAccessTokenMsg.getAuthorizerRefreshToken();
                 for (int i = 0; i < 10; i++) {
-                    AuthorizerAccessToken authorizerAccessToken = ComponentAPI.api_authorizer_token(componentAccessToken, AuthorizeConsts.appId, authorizer_appid, refreshToken);
+                    AuthorizerAccessToken authorizerAccessToken = ComponentAPI.api_authorizer_token(componentAccessToken, AuthorizeConsts.APP_ID, authorizer_appid, refreshToken);
                     if (authorizerAccessToken.isSuccess()) {
                         authorizeAccessTokenMsg.setAuthorizerAccessToken(authorizerAccessToken.getAuthorizerAccessToken());
                         authorizeAccessTokenMsg.setAuthorizerRefreshToken(authorizerAccessToken.getAuthorizerRefreshToken());
                         weChatUserAccessTokenDao.updateRecord(authorizeAccessTokenMsg);
-                        redisService.set(AuthorizeConsts.appId + authorizer_appid + AuthorizeConsts.userAccessToken,authorizerAccessToken.getAuthorizerAccessToken(),118*60);
+                        redisService.set(AuthorizeConsts.APP_ID + authorizer_appid + AuthorizeConsts.USER_ACCESS_TOKEN,authorizerAccessToken.getAuthorizerAccessToken(),118*60);
                         userAccessToken=authorizerAccessToken.getAuthorizerAccessToken();
                         break;
                     }

@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 import static com.example.authorize.weixin.consts.TokenManageConsts.DEFAULT_VALUE;
-import static com.example.authorize.weixin.consts.TokenManageConsts.perfix;
 
 @Service
 public class RedisService implements ExpireKey {

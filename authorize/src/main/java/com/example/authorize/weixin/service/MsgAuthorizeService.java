@@ -71,20 +71,20 @@ public class MsgAuthorizeService {
 
     public String getComponentAccessToken()throws Exception{
 
-        return redisService.get(AuthorizeConsts.appId + AuthorizeConsts.componentAccessToken);
+        return redisService.get(AuthorizeConsts.APP_ID + AuthorizeConsts.COMPONENT_ACCESS_TOKEN);
     }
 
 
     public String getPreAuthCode(String appId)throws Exception{
         String result=null;
         try {
-            if(redisService.exists(appId+AuthorizeConsts.preAuthCode)){
-             result=redisService.get(appId+AuthorizeConsts.preAuthCode);
+            if(redisService.exists(appId+AuthorizeConsts.PRE_AUTH_CODE)){
+             result=redisService.get(appId+AuthorizeConsts.PRE_AUTH_CODE);
             }
             else{
                 for(int i=0;i<10;i++) {
                     String componentAccessToken = getComponentAccessToken();
-                    PreAuthCode preAuthCode = ComponentAPI.getApiPreauthcode(componentAccessToken, AuthorizeConsts.appId);
+                    PreAuthCode preAuthCode = ComponentAPI.getApiPreauthcode(componentAccessToken, AuthorizeConsts.APP_ID);
                     if (preAuthCode.isSuccess()) {
                         result = preAuthCode.getPreAuthCode();
                         break;
@@ -105,10 +105,10 @@ public class MsgAuthorizeService {
     public void saveUserAccessToken(String tid,String auth_code,int expires_in){
         try{
 
-            String componentAccessToken = redisService.get(AuthorizeConsts.appId+AuthorizeConsts.componentAccessToken);
+            String componentAccessToken = redisService.get(AuthorizeConsts.APP_ID +AuthorizeConsts.COMPONENT_ACCESS_TOKEN);
             ApiQueryAuthResult apiQueryAuthResult=null;
             for(int i=0;i<10;i++){
-                apiQueryAuthResult = ComponentAPI.api_query_auth(componentAccessToken, AuthorizeConsts.appId,auth_code);
+                apiQueryAuthResult = ComponentAPI.api_query_auth(componentAccessToken, AuthorizeConsts.APP_ID,auth_code);
                 if(apiQueryAuthResult.isSuccess()) {
                     break;
                 }else{
@@ -122,7 +122,7 @@ public class MsgAuthorizeService {
                 weChatUserAccessTokenDao.insertRecord(authorizeAccessTokenMsg);
                 logger.info("新增AUTH_ACCESS_TOKEN "+authorizeAccessTokenMsg.getAuthorizerAppId());
                 ApiGetAuthorizerInfoResult apiGetAuthorizerInfoResult =ComponentAPI.api_get_authorizer_info(componentAccessToken,
-                        AuthorizeConsts.appId,authorizeAccessTokenMsg.getAuthorizerAppId());
+                        AuthorizeConsts.APP_ID,authorizeAccessTokenMsg.getAuthorizerAppId());
             }else{
                 weChatUserAccessTokenDao.updateRecord(authorizeAccessTokenMsg);
                 logger.info("更新AUTH_ACCESS_TOKEN "+authorizeAccessTokenMsg.getAuthorizerAppId());
@@ -140,10 +140,10 @@ public class MsgAuthorizeService {
     public void saveUserAccountInfo(String authorizer_appid,String tid){
         try {
             logger.info("USER_ACCOUNT_INFO 开始拉取用户信息");
-            String componentAccessToken = redisService.get(AuthorizeConsts.appId + AuthorizeConsts.componentAccessToken);
+            String componentAccessToken = redisService.get(AuthorizeConsts.APP_ID + AuthorizeConsts.COMPONENT_ACCESS_TOKEN);
             ApiGetAuthorizerInfoResult apiGetAuthorizerInfoResult = null;
             for (int i = 0; i < 10; i++) {
-                apiGetAuthorizerInfoResult = ComponentAPI.api_get_authorizer_info(componentAccessToken, AuthorizeConsts.appId, authorizer_appid);
+                apiGetAuthorizerInfoResult = ComponentAPI.api_get_authorizer_info(componentAccessToken, AuthorizeConsts.APP_ID, authorizer_appid);
                 if (apiGetAuthorizerInfoResult.isSuccess()) {
                     break;
                 }
@@ -156,7 +156,7 @@ public class MsgAuthorizeService {
                     authorizationInfo.getFunc_info().toString());
             weChatUserAccountInfoDao.insertRecord(authorizeAccountInfoMsg);
             for(int i=0;i<10;i++){
-                BaseResult baseResult=ComponentAPI.authorizeFinish(AuthorizeConsts.appId,authorizer_appid,tid);
+                BaseResult baseResult=ComponentAPI.authorizeFinish(AuthorizeConsts.APP_ID,authorizer_appid,tid);
                 if(baseResult.isSuccess()){
                     break;
                 }else{

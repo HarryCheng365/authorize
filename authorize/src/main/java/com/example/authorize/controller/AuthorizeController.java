@@ -51,11 +51,11 @@ public class AuthorizeController {
             JSONObject jsonObject= JSON.parseObject(json);
             String tid=jsonObject.getString("tid");
             tid=String.valueOf(System.currentTimeMillis()/AuthorizeConsts.ONE_SECOND);
-            if (jsonObject.getString("methodType").equals("QR_CODE")) {
-                result.put("url",ComponentAPI.getAuthUrlScan(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),genRedirectUrl(AuthorizeConsts.redirect_url,tid),"3" ));
+            if (jsonObject.getString("methodType").equals(AuthorizeConsts.METHOD_TYPE_OR_CODE)) {
+                result.put("url",ComponentAPI.getAuthUrlScan(AuthorizeConsts.APP_ID, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.APP_ID),genRedirectUrl(AuthorizeConsts.REDIRECT_URL,tid),"3" ));
 
             } else {
-                result.put("url", ComponentAPI.getAuthUrl(AuthorizeConsts.appId, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId),genRedirectUrl(AuthorizeConsts.redirect_url,tid),"3" ));
+                result.put("url", ComponentAPI.getAuthUrl(AuthorizeConsts.APP_ID, msgAuthorizeService.getPreAuthCode(AuthorizeConsts.APP_ID),genRedirectUrl(AuthorizeConsts.REDIRECT_URL,tid),"3" ));
             }
         }catch (Exception e){
             LOG.error("AuthUrl 生成失败",e);
@@ -80,9 +80,9 @@ public class AuthorizeController {
         String result=null;
         try {
             JSONObject response = new JSONObject();
-            response.put("component_appid", AuthorizeConsts.appId);
-            response.put("pre_auth_code", msgAuthorizeService.getPreAuthCode(AuthorizeConsts.appId));
-            response.put("redirect_url", changeCharset(AuthorizeConsts.redirect_url, "utf-8"));
+            response.put("component_appid", AuthorizeConsts.APP_ID);
+            response.put("pre_auth_code", msgAuthorizeService.getPreAuthCode(AuthorizeConsts.APP_ID));
+            response.put("REDIRECT_URL", changeCharset(AuthorizeConsts.REDIRECT_URL, "utf-8"));
             response.put("auth_type", "3");
             result=response.toJSONString();
 

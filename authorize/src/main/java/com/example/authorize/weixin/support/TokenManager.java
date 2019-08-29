@@ -12,7 +12,6 @@ import com.example.authorize.weixin.entity.Token;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 
@@ -80,8 +79,8 @@ public class TokenManager {
 	}
 	public void initAll(){
 		try {
-			initComponentAccessToken(AuthorizeConsts.appId, AuthorizeConsts.appSecret);
-			initPreAuthCode(AuthorizeConsts.appId);
+			initComponentAccessToken(AuthorizeConsts.APP_ID, AuthorizeConsts.APP_SECRET_KEY);
+			initPreAuthCode(AuthorizeConsts.APP_ID);
 		}catch (Exception e){
 			logger.error("COMPONENT_ACCESS_TOKEN bad initialization",e);
 		}
@@ -148,8 +147,8 @@ public class TokenManager {
 		if(scheduledExecutorService == null){
 			initScheduledExecutorService();
 		}
-		if(futureMap.containsKey(appid+AuthorizeConsts.preAuthCode)){
-			futureMap.get(appid+AuthorizeConsts.preAuthCode).cancel(true);
+		if(futureMap.containsKey(appid+AuthorizeConsts.PRE_AUTH_CODE)){
+			futureMap.get(appid+AuthorizeConsts.PRE_AUTH_CODE).cancel(true);
 		}
 		//立即执行一次
 		if(initialDelay == 0){
@@ -161,7 +160,7 @@ public class TokenManager {
 				refreshPreAuthCode(appid);
 			}
 		},initialDelay == 0 ? delay : initialDelay,delay,TimeUnit.SECONDS);
-		futureMap.put(appid+AuthorizeConsts.preAuthCode, scheduledFuture);
+		futureMap.put(appid+AuthorizeConsts.PRE_AUTH_CODE, scheduledFuture);
 		logger.info("PRE_AUTH_CODE task start appid:{}",appid);
 
 	}
@@ -169,12 +168,12 @@ public class TokenManager {
 	private  void refreshPreAuthCode(String appid){
 		try {
 			for(int i=0;i<10;i++){
-				String componentAccessToken=redisService.get(AuthorizeConsts.appId + AuthorizeConsts.componentAccessToken);
+				String componentAccessToken=redisService.get(AuthorizeConsts.APP_ID + AuthorizeConsts.COMPONENT_ACCESS_TOKEN);
 
 				PreAuthCode preAuthCode = ComponentAPI.getApiPreauthcode(componentAccessToken, appid);
 				if(preAuthCode.isSuccess()){
-					redisService.set(appid+AuthorizeConsts.preAuthCode,preAuthCode.getPreAuthCode(),570);
-					logger.info("PRE_AUTH_CODE refurbish with appid:{} and preAuthCode:{}",appid,preAuthCode.getPreAuthCode());
+					redisService.set(appid+AuthorizeConsts.PRE_AUTH_CODE,preAuthCode.getPreAuthCode(),570);
+					logger.info("PRE_AUTH_CODE refurbish with appid:{} and PRE_AUTH_CODE:{}",appid,preAuthCode.getPreAuthCode());
 					break;
 				}
 				else{
@@ -195,8 +194,8 @@ public class TokenManager {
 			initScheduledExecutorService();
 		}
 
-		if(futureMap.containsKey(componentAppid+AuthorizeConsts.componentAccessToken)){
-			futureMap.get(componentAppid+AuthorizeConsts.componentAccessToken).cancel(true);
+		if(futureMap.containsKey(componentAppid+AuthorizeConsts.COMPONENT_ACCESS_TOKEN)){
+			futureMap.get(componentAppid+AuthorizeConsts.COMPONENT_ACCESS_TOKEN).cancel(true);
 		}
 		if(initialDelay == 0){
 			refreshComponentAccessToken(componentAppid,componentSecret);
@@ -207,7 +206,7 @@ public class TokenManager {
 				refreshComponentAccessToken(componentAppid,componentSecret);
 			}
 		},initialDelay == 0 ? delay : initialDelay,delay,TimeUnit.SECONDS);
-		futureMap.put(componentAppid+AuthorizeConsts.componentAccessToken, scheduledFuture);
+		futureMap.put(componentAppid+AuthorizeConsts.COMPONENT_ACCESS_TOKEN, scheduledFuture);
 		logger.info("COMPONENT_ACCESS_TOKEN task start appid:{}",componentAppid);
 
 	}
@@ -215,30 +214,32 @@ public class TokenManager {
 	private  void refreshComponentAccessToken(String appid,String secret){
 		try{
 
+			ComponentAccessToken componentAccessToken=null;
 			String component_verify_ticket=null;
 			for(int i=0;i<12;i++) {
-				component_verify_ticket = weChatMsgAuthorizeDao.getLastestComponentVerifyTickets(AuthorizeConsts.appId);
+				component_verify_ticket = weChatMsgAuthorizeDao.getLastestComponentVerifyTickets(AuthorizeConsts.APP_ID);
 				if (component_verify_ticket == null) {
+					logger.error("COMPONENT_ACCESS_TOKEN not exist in database ERROR with appid:{}",appid);
 					Thread.sleep(60000);
 				}else{
-					break;
+					componentAccessToken=ComponentAPI.getApiComponentToken(appid, secret, component_verify_ticket);
+					if(componentAccessToken.isSuccess()){
+						break;
+					}else{
+						logger.error("COMPONENT_ACCESS_TOKEN HttpRequest ERROR with appid:{}",appid);
+						Thread.sleep(60000);
+					};
 				}
 			}
-			for(int i=0;i<10;i++) {
-				ComponentAccessToken componentAccessToken = ComponentAPI.getApiComponentToken(appid, secret, component_verify_ticket);
-				if (componentAccessToken.isSuccess()) {
-					ComponentAccessTokenMsg componentAccessTokenMsg =new ComponentAccessTokenMsg(AuthorizeConsts.appId,componentAccessToken.getComponentAccessToken(),componentAccessToken.getExpiresIn());
-					weChatComponentAccessTokenDao.insertRecord(componentAccessTokenMsg);
-					redisService.set(appid + AuthorizeConsts.componentAccessToken, componentAccessToken.getComponentAccessToken(), 118 * 60);
-					logger.info("COMPONENT_ACCESS_TOKEN refurbish with appid:{} and componentAccessToken:{}",appid,componentAccessToken.getComponentAccessToken());
-					break;
-				}else{
-					logger.error("COMPONENT_ACCESS_TOKEN HttpRequest ERROR with appid:{}",appid);
-					Thread.sleep(1000);
-				}
+			if (componentAccessToken.isSuccess()) {
+				ComponentAccessTokenMsg componentAccessTokenMsg =new ComponentAccessTokenMsg(AuthorizeConsts.APP_ID,componentAccessToken.getComponentAccessToken(),componentAccessToken.getExpiresIn());
+				weChatComponentAccessTokenDao.insertRecord(componentAccessTokenMsg);
+				redisService.set(appid + AuthorizeConsts.COMPONENT_ACCESS_TOKEN, componentAccessToken.getComponentAccessToken(), 118 * 60);
+				logger.info("COMPONENT_ACCESS_TOKEN refurbish with appid:{} and COMPONENT_ACCESS_TOKEN:{}",appid,componentAccessToken.getComponentAccessToken());
+
+			}else{
+				logger.error("COMPONENT_ACCESS_TOKEN HttpRequest ERROR with appid:{}",appid);
 			}
-
-
 		}catch (Exception e){
 			logger.error("COMPONENT_ACCESS_TOKEN refurbish error with appid:{}",appid);
 			logger.error("", e);
@@ -281,7 +282,7 @@ public class TokenManager {
 	 * @return token
 	 */
 	public  String getDefaultToken(){
-		return tokenMap.get(AuthorizeConsts.appId);
+		return tokenMap.get(AuthorizeConsts.APP_ID);
 	}
 
 }

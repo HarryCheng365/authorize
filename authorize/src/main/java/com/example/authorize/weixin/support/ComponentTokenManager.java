@@ -15,7 +15,7 @@ public interface ComponentTokenManager {
 	 * 获取 component_access_token
 	 * 
 	 * @param component_appid component_appid
-	 * @return componentAccessToken
+	 * @return COMPONENT_ACCESS_TOKEN
 	 */
 	String getComponentAccessToken(String component_appid);
 
@@ -23,7 +23,7 @@ public interface ComponentTokenManager {
 	 * 获取 component_access_token <br>
 	 * 适用于单一第三方平台环境
 	 * 
-	 * @return componentAccessToken
+	 * @return COMPONENT_ACCESS_TOKEN
 	 */
 	String getComponentAccessToken();
 
